@@ -13,7 +13,24 @@ public class Account {
     private Long id;
     
     private enum type{
-        Savings, Checking, Credit
+        SAVINGS {
+            @Override
+            public String toString() {
+                return "Savings";
+            }
+        },
+        CHECKING {
+            @Override
+            public String toString() {
+                return "Checking";
+            }
+        },
+        CREDIT {
+            @Override
+            public String toString() {
+                return "Credit";
+            }
+        }
     };
     private String nickname;
     private Integer rewards;

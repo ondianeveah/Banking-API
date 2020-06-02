@@ -1,6 +1,6 @@
-package com.haggardinnovations.bankingapi.repository;
+package com.haggardinnovations.bankingapi.repositories;
 
-import com.haggardinnovations.bankingapi.domain.Withdrawal;
+import com.haggardinnovations.bankingapi.domains.Withdrawal;
 import org.springframework.data.repository.CrudRepository;
 
 public interface WithdrawalRepo extends CrudRepository<Withdrawal, Long> {

@@ -1,4 +1,4 @@
-package com.haggardinnovations.bankingapi.domain;
+package com.haggardinnovations.bankingapi.domains;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package com.haggardinnovations.bankingapi.domain;
+package com.haggardinnovations.bankingapi.domains;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,26 +12,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private enum type{
-        SAVINGS {
-            @Override
-            public String toString() {
-                return "Savings";
-            }
-        },
-        CHECKING {
-            @Override
-            public String toString() {
-                return "Checking";
-            }
-        },
-        CREDIT {
-            @Override
-            public String toString() {
-                return "Credit";
-            }
-        }
-    };
+
     private String nickname;
     private Integer rewards;
     private Double balance;

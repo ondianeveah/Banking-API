@@ -3,6 +3,7 @@ package com.haggardinnovations.bankingapi.controllers;
 
 import com.haggardinnovations.bankingapi.domains.Account;
 import com.haggardinnovations.bankingapi.domains.Withdrawal;
+import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
 import com.haggardinnovations.bankingapi.repositories.WithdrawalRepo;
 import com.haggardinnovations.bankingapi.services.WithdrawalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,12 @@ public class WithdrawalController {
     @Autowired
     private WithdrawalService withdrawalService;
 
-   // protected void verifyWithdrawal(Long withdrawalId) throws ResourceN
+    protected void verifyWithdrawal(Long withdrawalId) throws ResourceNotFoundException{
+        Optional<Withdrawal> withdrawal = withdrawalRepo.findById(withdrawalId);
+        if (withdrawal == null){
+            throw new ResourceNotFoundException("Withdrawal with id" + withdrawalId + " not found");
+        }
+    }
 
     @RequestMapping(value = "/accounts/{accountId}/withrdawals", method = RequestMethod.GET)
     public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawals(@PathVariable Long accountId){
@@ -52,10 +58,20 @@ public class WithdrawalController {
         return new ResponseEntity<>(null, headers, HttpStatus.CREATED);
     }
 
-//    @RequestMapping(value = "/withdrawals/{withdrawalId}", method = RequestMethod.PUT)
-//    public ResponseEntity<Object> updateWithdrawal(@RequestBody Withdrawal withdrawal, @PathVariable Long withdrawalId){
-//
-//    }
+    @RequestMapping(value = "/withdrawals/{withdrawalId}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateWithdrawal(@RequestBody Withdrawal withdrawal, @PathVariable Long withdrawalId){
+        withdrawalService.updateWithdrawal(withdrawalId, withdrawal);
+        return new ResponseEntity<>(withdrawal, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/withdrawals/{withdrawalId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteWithdrawal(@PathVariable Long withdrawalId){
+        withdrawalService.deleteWithdrawal(withdrawalId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    }
 
 
 
@@ -65,4 +81,4 @@ public class WithdrawalController {
 
 
 
-}
+

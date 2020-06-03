@@ -4,8 +4,17 @@ import com.haggardinnovations.bankingapi.enumerations.WithdrawalMedium;
 import com.haggardinnovations.bankingapi.enumerations.WithdrawalStatus;
 import com.haggardinnovations.bankingapi.enumerations.WithdrawalType;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Withdrawal {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private WithdrawalType type;
     private String transaction_date;
     private WithdrawalStatus status;

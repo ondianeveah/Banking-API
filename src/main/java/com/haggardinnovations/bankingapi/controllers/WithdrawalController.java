@@ -35,19 +35,19 @@ public class WithdrawalController {
 
     @RequestMapping(value = "/accounts/{accountId}/withrdawals", method = RequestMethod.GET)
     public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawals(@PathVariable Long accountId){
-        Iterable<Withdrawal> withdrawals = withdrawalRepo.findAll();
+        Iterable<Withdrawal> withdrawals = withdrawalService.getAllWithdrawals();
         return new ResponseEntity<>(withdrawals, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/withdrawals/{withdrawalId}", method = RequestMethod.GET)
     public ResponseEntity<?> getWithdrawalById(@PathVariable Long withdrawalId){
-        Optional<Withdrawal> withdrawal = withdrawalRepo.findById(withdrawalId);
-        return new ResponseEntity<>(withdrawalId, HttpStatus.OK);
+        Optional<Withdrawal> withdrawal = withdrawalService.getWithdrawalById(withdrawalId);
+        return new ResponseEntity<>(withdrawal, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/accounts/{accountId}/withdrawals", method = RequestMethod.POST)
     public ResponseEntity<?> createWithdrawal(@RequestBody Withdrawal withdrawal){
-        withdrawal = withdrawalRepo.save(withdrawal);
+        withdrawalService.createWithdrawal(withdrawal);
         HttpHeaders headers = new HttpHeaders();
         URI newWithdrawalUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

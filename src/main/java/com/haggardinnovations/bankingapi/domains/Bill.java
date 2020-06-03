@@ -1,17 +1,38 @@
 package com.haggardinnovations.bankingapi.domains;
 
+import com.haggardinnovations.bankingapi.enumerations.BillStatus;
+
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Bill {
 
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    Long id;
-    String payee;
-    String nickname;
-    String creation_date;
-    String payment_date;
-    Integer recurring_date;
-    String upcoming_payment_date;
-    Double payment_amount;
-    String account_id;
+    @Enumerated
+    private BillStatus status;
+
+    public BillStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BillStatus status) {
+        this.status = status;
+    }
+
+    private String payee;
+   private String nickname;
+   private String creation_date;
+   private String payment_date;
+   private Integer recurring_date;
+   private String upcoming_payment_date;
+   private Double payment_amount;
+   private String account_id;
 
     public Long getId() {
         return id;
@@ -89,6 +110,7 @@ public class Bill {
     public String toString() {
         return "Bill{" +
                 "id=" + id +
+                ", status=" + status +
                 ", payee='" + payee + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", creation_date='" + creation_date + '\'' +

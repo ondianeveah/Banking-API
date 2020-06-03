@@ -1,5 +1,7 @@
 package com.haggardinnovations.bankingapi.domains;
 
+import com.haggardinnovations.bankingapi.enumerations.AccountType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +14,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-
+    private AccountType type;
     private String nickname;
     private Integer rewards;
     private Double balance;

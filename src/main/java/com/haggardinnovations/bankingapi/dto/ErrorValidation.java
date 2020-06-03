@@ -1,4 +1,4 @@
-package com.haggardinnovations.bankingapi.dto.error;
+package com.haggardinnovations.bankingapi.dto;
 
 public class ErrorValidation {
     private String info;

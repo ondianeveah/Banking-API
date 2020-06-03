@@ -1,11 +1,5 @@
 package com.haggardinnovations.bankingapi.dto;
 
-import com.haggardinnovations.bankingapi.dto.error.ErrorValidation;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class ErrorDetail {
     private Long code;
     private String message;

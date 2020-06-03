@@ -26,7 +26,9 @@ public class CustomerService {
         return customerList;
     }
     public Optional<Customer> getCustomerById(Long id) {
-
+       Optional<Customer> c = customerRepo.findById(id);
+       return c;
     }
+    
 
 }

@@ -19,4 +19,12 @@ public class ErrorValidation {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return "ErrorValidation{" +
+                "info='" + info + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

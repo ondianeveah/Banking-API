@@ -3,10 +3,20 @@ package com.haggardinnovations.bankingapi.dto;
 public class ErrorDetail {
     private Long code;
     private String message;
+    private int status;
 
     public ErrorDetail(Long code, String message) {
         this.code = code;
         this.message = message;
+
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public ErrorDetail(){
@@ -34,6 +44,7 @@ public class ErrorDetail {
         return "ErrorDetail{" +
                 "code=" + code +
                 ", message='" + message + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

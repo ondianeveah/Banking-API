@@ -40,10 +40,10 @@ public class AccountService {
 
     }
 
-    public Iterable<Account> getAccountsByCustomer(Long customer) {
+    public List<Account> getAllAccountsByCustomer(Long customerId) {
         List<Account> listOfCustomerAccounts = new ArrayList<>();
-        verifyAccount(customer);
-        accountRepo.findAll(customer).forEach(listOfCustomerAccounts::add);
+//        verifyAccount(customer);
+        accountRepo.findByCustomerId(customerId).forEach(listOfCustomerAccounts::add);
         return listOfCustomerAccounts;
 
     }

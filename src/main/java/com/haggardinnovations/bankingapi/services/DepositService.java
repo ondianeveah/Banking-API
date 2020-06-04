@@ -15,12 +15,13 @@ public class DepositService {
 
     @Autowired
     private DepositRepo depositRepo;
+    //Fix what is commented out. Look at previous APIs(quick-poll specifically)
 
-    public List<Deposit> getAllDepositsByAccount(Long accountId){
-        List<Deposit> depositList = new ArrayList<>();
-        depositRepo.findByAccountId(accountId).forEach(depositList::add);
-        return depositList;
-    }
+//    public List<Deposit> getAllDepositsByAccount(Long accountId){
+//        List<Deposit> depositList = new ArrayList<>();
+//        depositRepo.findByAccountId(accountId).forEach(depositList::add);
+//        return depositList;
+//    }
     public Optional<Deposit> getOneDepositById(Long accountId){
         return depositRepo.findById(accountId);
     }

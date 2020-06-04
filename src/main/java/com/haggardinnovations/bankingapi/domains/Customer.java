@@ -15,7 +15,8 @@ public class Customer {
 
     private String first_name;
     private String last_name;
-    private Set<Address> address;
+    //Probably missing annotation
+//    private Set<Address> address;
 
     public Long getId() {
         return id;
@@ -41,11 +42,11 @@ public class Customer {
         this.last_name = last_name;
     }
 
-    public Set<Address> getAddress() {
-        return address;
-    }
-
-    public void setAddress(Set<Address> address) {
-        this.address = address;
-    }
+//    public Set<Address> getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(Set<Address> address) {
+//        this.address = address;
+//    }
 }

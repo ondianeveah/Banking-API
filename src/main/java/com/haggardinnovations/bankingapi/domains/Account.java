@@ -16,7 +16,7 @@ public class Account {
     private String nickname;
     private Integer rewards;
     private Double balance;
-    private Customer customer;
+//    private Customer customer;
 
     public Long getId() {
         return id;
@@ -50,11 +50,11 @@ public class Account {
         this.balance = balance;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+//    public Customer getCustomer() {
+//        return customer;
+//    }
+//
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
 }

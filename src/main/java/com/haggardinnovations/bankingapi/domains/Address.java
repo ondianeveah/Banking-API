@@ -1,22 +1,43 @@
 package com.haggardinnovations.bankingapi.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ADDRESS_ID")
     private Long id;
 
+    @Column(name = "STREET_NUMBER")
     private String street_number;
+
+    @Column(name = "STREET_NAME")
     private String street_name;
+
+    @Column(name = "CITY")
     private String city;
+
+    @Column(name = "STATE")
     private String state;
+
+    @Column(name = "ZIP")
     private String zip;
+
+
+    public Address(){
+
+    }
+
+    public Address(Long id, String street_number, String street_name, String city, String state, String zip) {
+        this.id = id;
+        this.street_number = street_number;
+        this.street_name = street_name;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+    }
 
     public Long getId() {
         return id;
@@ -64,5 +85,17 @@ public class Address {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", street_number='" + street_number + '\'' +
+                ", street_name='" + street_name + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                '}';
     }
 }

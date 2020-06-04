@@ -1,21 +1,61 @@
 package com.haggardinnovations.bankingapi.domains;
 
 import com.haggardinnovations.bankingapi.enumerations.BillStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Bill {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "BILL_ID")
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private BillStatus status;
+
+    @Column(name = "PAYEE")
+    private String payee;
+
+    @Column(name = "NICKNAME")
+    private String nickname;
+
+    @Column(name = "CREATION_DATE")
+    private String creation_date;
+
+    @Column(name = "PAYMENT_DATE")
+    private String payment_date;
+
+    @Column(name = "RECURRING_DATE")
+    private Integer recurring_date;
+
+    @Column(name = "UPCOMING_PAYMENT_DATE")
+    private String upcoming_payment_date;
+
+    @Column(name = "PAYMENT_AMOUNT")
+    private Double payment_amount;
+
+    @Column(name = "ACCOUNT_ID")
+    private String account_id;
+
+
+    public Bill(){
+    }
+
+    public Bill(Long id, BillStatus status, String payee, String nickname, String creation_date, String payment_date, Integer recurring_date, String upcoming_payment_date, Double payment_amount, String account_id) {
+        this.id = id;
+        this.status = status;
+        this.payee = payee;
+        this.nickname = nickname;
+        this.creation_date = creation_date;
+        this.payment_date = payment_date;
+        this.recurring_date = recurring_date;
+        this.upcoming_payment_date = upcoming_payment_date;
+        this.payment_amount = payment_amount;
+        this.account_id = account_id;
+    }
 
     public BillStatus getStatus() {
         return status;
@@ -24,15 +64,6 @@ public class Bill {
     public void setStatus(BillStatus status) {
         this.status = status;
     }
-
-    private String payee;
-   private String nickname;
-   private String creation_date;
-   private String payment_date;
-   private Integer recurring_date;
-   private String upcoming_payment_date;
-   private Double payment_amount;
-   private String account_id;
 
     public Long getId() {
         return id;

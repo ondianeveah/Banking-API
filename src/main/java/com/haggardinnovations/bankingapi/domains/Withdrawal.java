@@ -1,29 +1,51 @@
 package com.haggardinnovations.bankingapi.domains;
 
-import com.haggardinnovations.bankingapi.enumerations.WithdrawalMedium;
-import com.haggardinnovations.bankingapi.enumerations.WithdrawalStatus;
-import com.haggardinnovations.bankingapi.enumerations.WithdrawalType;
+import com.haggardinnovations.bankingapi.enumerations.TransactionMedium;
+import com.haggardinnovations.bankingapi.enumerations.TransactionStatus;
+import com.haggardinnovations.bankingapi.enumerations.TransactionType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Withdrawal {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "WITHDRAWAL_ID")
     private Long id;
 
-    private WithdrawalType type;
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
+
+    @Column(name = "TRANSACTION_DATE")
     private String transaction_date;
-    private WithdrawalStatus status;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus status;
+
+    @Column(name = "PAYER_ID")
     private Long payer_id;
-    private WithdrawalMedium medium;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionMedium medium;
+
+    @Column(name = "AMOUNT")
     private Double amount;
+
+    @Column(name = "DESCRIPTION")
     private String description;
 
     public Withdrawal() {
+    }
+
+    public Withdrawal(Long id, TransactionType type, String transaction_date, TransactionStatus status, Long payer_id, TransactionMedium medium, Double amount, String description) {
+        this.id = id;
+        this.type = type;
+        this.transaction_date = transaction_date;
+        this.status = status;
+        this.payer_id = payer_id;
+        this.medium = medium;
+        this.amount = amount;
+        this.description = description;
     }
 
     public Long getId() {
@@ -34,11 +56,11 @@ public class Withdrawal {
         this.id = id;
     }
 
-    public WithdrawalType getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(WithdrawalType type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 
@@ -50,11 +72,11 @@ public class Withdrawal {
         this.transaction_date = transaction_date;
     }
 
-    public WithdrawalStatus getStatus() {
+    public TransactionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(WithdrawalStatus status) {
+    public void setStatus(TransactionStatus status) {
         this.status = status;
     }
 
@@ -66,11 +88,11 @@ public class Withdrawal {
         this.payer_id = payer_id;
     }
 
-    public WithdrawalMedium getMedium() {
+    public TransactionMedium getMedium() {
         return medium;
     }
 
-    public void setMedium(WithdrawalMedium medium) {
+    public void setMedium(TransactionMedium medium) {
         this.medium = medium;
     }
 
@@ -94,13 +116,13 @@ public class Withdrawal {
     public String toString() {
         return "Withdrawal{" +
                 "id=" + id +
-                ", medium=" + medium +
+                ", type=" + type +
                 ", transaction_date='" + transaction_date + '\'' +
-                ", amount=" + amount +
-                ", description=" + description +
                 ", status=" + status +
                 ", payer_id=" + payer_id +
-                ", type='" + type + '\'' +
+                ", medium=" + medium +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

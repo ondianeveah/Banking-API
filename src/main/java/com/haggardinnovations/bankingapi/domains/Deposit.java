@@ -1,27 +1,53 @@
 package com.haggardinnovations.bankingapi.domains;
 
-import com.haggardinnovations.bankingapi.enumerations.DepositMedium;
-import com.haggardinnovations.bankingapi.enumerations.DepositStatus;
-import com.haggardinnovations.bankingapi.enumerations.DepositType;
+import com.haggardinnovations.bankingapi.enumerations.TransactionMedium;
+import com.haggardinnovations.bankingapi.enumerations.TransactionStatus;
+import com.haggardinnovations.bankingapi.enumerations.TransactionType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Deposit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "DEPOSIT_ID")
     private Long id;
 
-    private DepositType type;
-    private String transaction;
-    private DepositStatus status;
-    private Long payee_id;
-    private DepositMedium medium;
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
+
+    @Column(name = "TRANSACTION_DATE")
+    private String transactionDate;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus status;
+
+    @Column(name = "PAYER_ID")
+    private Long payer_id;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionMedium medium;
+
+    @Column(name = "AMOUNT")
     private Double amount;
+
+    @Column(name = "DESCRIPTION")
     private String description;
 
-    public Deposit(){
+    public Deposit() {
+    }
+
+    public Deposit(@NotEmpty Long id, @NotEmpty TransactionType type, @NotEmpty String transactionDate, @NotEmpty TransactionStatus status, Long payer_id, TransactionMedium medium, @NotEmpty Double amount, String description) {
+        this.id = id;
+        this.type = type;
+        this.transactionDate = transactionDate;
+        this.status = status;
+        this.payer_id = payer_id;
+        this.medium = medium;
+        this.amount = amount;
+        this.description = description;
     }
 
     public Long getId() {
@@ -32,43 +58,43 @@ public class Deposit {
         this.id = id;
     }
 
-    public DepositType getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(DepositType type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 
-    public String getTransaction() {
-        return transaction;
+    public String getTransactionDate() {
+        return transactionDate;
     }
 
-    public void setTransaction(String transaction) {
-        this.transaction = transaction;
+    public void setTransactionDate(String transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
-    public DepositStatus getStatus() {
+    public TransactionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(DepositStatus status) {
+    public void setStatus(TransactionStatus status) {
         this.status = status;
     }
 
-    public Long getPayee_id() {
-        return payee_id;
+    public Long getPayer_id() {
+        return payer_id;
     }
 
-    public void setPayee_id(Long payee_id) {
-        this.payee_id = payee_id;
+    public void setPayer_id(Long payer_id) {
+        this.payer_id = payer_id;
     }
 
-    public DepositMedium getMedium() {
+    public TransactionMedium getMedium() {
         return medium;
     }
 
-    public void setMedium(DepositMedium medium) {
+    public void setMedium(TransactionMedium medium) {
         this.medium = medium;
     }
 
@@ -93,9 +119,9 @@ public class Deposit {
         return "Deposit{" +
                 "id=" + id +
                 ", type=" + type +
-                ", transaction='" + transaction + '\'' +
+                ", transactionDate='" + transactionDate + '\'' +
                 ", status=" + status +
-                ", payee_id=" + payee_id +
+                ", payer_id=" + payer_id +
                 ", medium=" + medium +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +

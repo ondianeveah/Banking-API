@@ -69,9 +69,7 @@ public class WithdrawalController {
         withdrawalService.deleteWithdrawal(withdrawalId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-    }
+}
 
 
 

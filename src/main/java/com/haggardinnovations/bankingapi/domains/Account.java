@@ -2,23 +2,47 @@ package com.haggardinnovations.bankingapi.domains;
 
 import com.haggardinnovations.bankingapi.enumerations.AccountType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ACCOUNT_ID")
     private Long id;
-    
+
+    @Enumerated(EnumType.STRING)
     private AccountType type;
+
+    @Column(name = "NICKNAME")
     private String nickname;
+
+    @Column(name = "REWARDS")
     private Integer rewards;
+
+    @Column(name = "BALANCE")
     private Double balance;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @NotEmpty
+    @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;
+
+    public Account(){
+
+    }
+
+    public Account(Long id, AccountType type, String nickname, Integer rewards, Double balance, @NotEmpty @Size(min = 1) Customer customer) {
+        this.id = id;
+        this.type = type;
+        this.nickname = nickname;
+        this.rewards = rewards;
+        this.balance = balance;
+        this.customer = customer;
+    }
 
     public Long getId() {
         return id;
@@ -58,5 +82,17 @@ public class Account {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", type=" + type +
+                ", nickname='" + nickname + '\'' +
+                ", rewards=" + rewards +
+                ", balance=" + balance +
+                ", customer=" + customer +
+                '}';
     }
 }

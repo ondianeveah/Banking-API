@@ -54,14 +54,14 @@ public class AccountService {
 
     }
 
-    public void deleteAccountById(Long id) {
-
-        verifyAccount(id);
-        Iterable<Customer> customer = customerRepo.findByAccount(id);
-        customerRepo.deleteAll(customer);
-        accountRepo.deleteById(id);
-
-    }
+//    public void deleteAccountById(Long id) {
+//
+//        verifyAccount(id);
+//        Iterable<Customer> customer = customerRepo.findByAccount(id);
+//        customerRepo.deleteAll(customer);
+//        accountRepo.deleteById(id);
+//
+//    }
     public void verifyAccount(Long accountId) throws ResourceNotFoundException {
 
         Optional<Account> account = accountRepo.findById(accountId);

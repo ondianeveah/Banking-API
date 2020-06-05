@@ -56,6 +56,7 @@ public class AccountService {
 
     }
 
+
     public void deleteAccountById(Long id) {
 
         verifyAccount(id);
@@ -64,6 +65,7 @@ public class AccountService {
         accountRepo.deleteById(id);
 
     }
+
     public void verifyAccount(Long accountId) throws ResourceNotFoundException {
 
         Optional<Account> account = accountRepo.findById(accountId);

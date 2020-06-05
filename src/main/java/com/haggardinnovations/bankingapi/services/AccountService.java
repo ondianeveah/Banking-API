@@ -38,8 +38,15 @@ public class AccountService {
 
     }
 
-    public void addAccount(Account account) {
-        accountRepo.save(account);
+    public void addAccount(Account account, Long customerId) {
+        for (Customer customers : customerRepo.findAll()){
+            if (customers.getId().equals(customerId)){
+                account.setCustomer(customers);
+                accountRepo.save(account);
+            }
+        }
+
+
 
     }
 

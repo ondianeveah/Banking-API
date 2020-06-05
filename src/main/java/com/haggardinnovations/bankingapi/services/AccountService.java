@@ -6,11 +6,14 @@ import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
 import com.haggardinnovations.bankingapi.repositories.AccountRepo;
 import com.haggardinnovations.bankingapi.repositories.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+@Service
 public class AccountService {
 
     @Autowired
@@ -22,7 +25,7 @@ public class AccountService {
 
 
 
-    public Iterable<Account> getAllAccounts() {
+    public List<Account> getAllAccounts() {
         List<Account> listOfAccounts = new ArrayList<>();
         accountRepo.findAll().forEach(listOfAccounts::add);
         return listOfAccounts;
@@ -42,7 +45,6 @@ public class AccountService {
 
     public List<Account> getAllAccountsByCustomer(Long customerId) {
         List<Account> listOfCustomerAccounts = new ArrayList<>();
-//        verifyAccount(customer);
         accountRepo.findByCustomerId(customerId).forEach(listOfCustomerAccounts::add);
         return listOfCustomerAccounts;
 
@@ -57,8 +59,8 @@ public class AccountService {
     public void deleteAccountById(Long id) {
 
         verifyAccount(id);
-        Iterable<Customer> customer = customerRepo.findByAccount(id);
-        customerRepo.deleteAll(customer);
+        Optional<Customer> customer = customerRepo.findById(id);
+        customerRepo.deleteAll();
         accountRepo.deleteById(id);
 
     }

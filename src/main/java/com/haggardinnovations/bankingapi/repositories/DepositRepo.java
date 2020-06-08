@@ -8,6 +8,6 @@ import java.util.List;
 
 
 public interface DepositRepo extends CrudRepository<Deposit, Long> {
-    //Failed to create query for method public abstract, No property accountId found for type Deposit
+
 //    List<Deposit> findByAccountId(Long accountId);
 }

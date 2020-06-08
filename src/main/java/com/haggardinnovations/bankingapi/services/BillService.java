@@ -18,7 +18,7 @@ public class BillService {
     @Autowired
     private BillRepo billRepo;
     @Autowired
-    private AccountRepo accountRepo;
+    private AccountService accountService;
 
     public BillService(BillRepo billRepo) {
         this.billRepo = billRepo;
@@ -26,7 +26,7 @@ public class BillService {
 
     public List<Bill> getAllBillsByAccountId(Long accountId) {
         List<Bill> bills = (ArrayList<Bill>) billRepo.findAll();
-        verifyAccountById(accountId);
+//        verifyAccountById(accountId);
         List<Account> accounts = new ArrayList<>();
         for (Account account : accounts){
             if (account.getId().equals(accountId))
@@ -40,11 +40,13 @@ public class BillService {
     }
 
 //    public List<Bill> getBillsByCustomerId(Long customerId){
+//        List<Account> accounts = accountService.getAllAccountsByCustomer(customerId);
 //        List<Bill> listOfCustomers = new ArrayList<>();
-//        billRepo.findByCustomerId(customerId).forEach(listOfCustomers::add);
+//        for (Account account : accounts){
+//            billRepo.findAll().forEach(listOfCustomers ::add);
+//        }
 //        return listOfCustomers;
 //    }
-
     public Bill createBill(Bill bill){
         billRepo.save(bill);
         return bill;
@@ -66,12 +68,12 @@ public class BillService {
             throw new ResourceNotFoundException("Bill with id " + billId + " not found");
         }
     }
-    public void verifyAccountById(Long accountId) throws ResourceNotFoundException {
-        Optional<Account> account = accountRepo.findById(accountId);
-        if(!account.isPresent()) {
-            throw new ResourceNotFoundException("Account with id " + accountId + " not found");
-        }
-    }
+//    public void verifyAccountById(Long accountId) throws ResourceNotFoundException {
+//        Optional<Account> account = accountRepo.findById(accountId);
+//        if(!account.isPresent()) {
+//            throw new ResourceNotFoundException("Account with id " + accountId + " not found");
+//        }
+//    }
 
 
 }

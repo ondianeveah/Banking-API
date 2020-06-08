@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BillRepo extends CrudRepository<Bill, Long> {
-//    List<Bill> findByCustomerId(Long customerId);
+//    List<Bill> findByAccountId(Long accountId);
 }

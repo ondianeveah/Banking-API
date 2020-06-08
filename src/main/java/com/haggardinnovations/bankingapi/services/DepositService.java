@@ -35,21 +35,22 @@ public class DepositService {
 //        depositRepo.findByAccountId(accountId).forEach(depositList::add);
 //        return depositList;
 //    }
+
     public Optional<Deposit> getOneDepositById(Long accountId){
         return depositRepo.findById(accountId);
     }
+
     public void createDeposit(Deposit deposit, Long accountId){
         depositRepo.save(deposit);
     }
+
     public void updateDeposit(Deposit deposit, Long depositId){
         depositRepo.save(deposit);
     }
+
     public void deleteDeposit(Long id){
         depositRepo.deleteById(id);
     }
-
-
-
 
 //    List<Account> listOfCustomerAccounts = new ArrayList<>();
 //        accountRepo.findByCustomerId(customerId).forEach(listOfCustomerAccounts::add);

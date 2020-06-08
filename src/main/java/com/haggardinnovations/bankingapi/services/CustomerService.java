@@ -42,6 +42,7 @@ public class CustomerService {
         customerRepo.findAll().forEach(listOfCustomers::add);
         return listOfCustomers;
     }
+
     public Optional<Customer> getCustomerById(Long id) {
         verifyCustomer(id);
        Optional<Customer> customer = customerRepo.findById(id);

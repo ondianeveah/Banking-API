@@ -39,11 +39,12 @@ public class BillService {
         return billRepo.findById(id);
     }
 
-    public List<Bill> getBillsByCustomerId(Long customerId){
-        List<Bill> listOfCustomers = new ArrayList<>();
-        billRepo.findByCustomerId(customerId).forEach(listOfCustomers::add);
-        return listOfCustomers;
-    }
+//    public List<Bill> getBillsByCustomerId(Long customerId){
+//        List<Bill> listOfCustomers = new ArrayList<>();
+//        billRepo.findByCustomerId(customerId).forEach(listOfCustomers::add);
+//        return listOfCustomers;
+//    }
+
     public Bill createBill(Bill bill){
         billRepo.save(bill);
         return bill;

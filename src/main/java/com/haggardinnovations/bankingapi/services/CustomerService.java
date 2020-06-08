@@ -55,7 +55,7 @@ public class CustomerService {
     public Customer getCustomersByAccountId(Long accountId) throws ResourceNotFoundException {
         //  verifyAccount(accountId);
         Customer customer;
-        for (Account account : accountRepo.findAll()) {
+        for (Account account : accountRepo.findByCustomerId(accountId)) {
             if (account.getId().equals(accountId)) {
                 customer = account.getCustomer();
                 return customer;
@@ -70,8 +70,8 @@ public class CustomerService {
     }
 
 
-//    public Customer updateCustomerById(Long id, Customer customer){
-//        verifyCustomer(customer.getId());
-//        return customerRepo.save(id);
-//    }
+    public Customer updateCustomerById(Customer customer){
+        verifyCustomer(customer.getId());
+        return customerRepo.save(customer);
+    }
 }

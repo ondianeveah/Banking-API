@@ -69,6 +69,7 @@ public class CustomerController {
         return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
     }
 
+
 //
 //    @RequestMapping(value = "/customers/{id}", method = RequestMethod.PUT)
 //    public ResponseEntity<?> updateCustomerById(@PathVariable Long id, @RequestBody Customer customer){
@@ -77,6 +78,7 @@ public class CustomerController {
 //        log.info("Put Customers By Id " + c);
 //        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //    }
+
 
     @RequestMapping(value = "/customers/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteCustomerById(@PathVariable Long id){

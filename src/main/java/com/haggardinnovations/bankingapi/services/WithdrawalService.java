@@ -22,27 +22,29 @@ public class WithdrawalService {
             throw new ResourceNotFoundException("Withdrawal with id" + withdrawalId + " not found");
         }
     }
+
     public Iterable<Withdrawal> getAllWithdrawals(Long id){
         List<Withdrawal> withdrawals = new ArrayList<>();
         withdrawalRepo.findAll().forEach(withdrawals::add);
         return withdrawals;
     }
+
     public Optional<Withdrawal> getWithdrawalById(Long withdrawalId){
         verifyWithdrawal(withdrawalId);
         return withdrawalRepo.findById(withdrawalId);
     }
+
     public void createWithdrawal(Withdrawal withdrawal){
         withdrawalRepo.save(withdrawal);
     }
+
     public void updateWithdrawal(Long withdrawalId, Withdrawal withdrawal){
         verifyWithdrawal(withdrawalId);
         withdrawalRepo.save(withdrawal);
     }
+
     public void deleteWithdrawal(Long withdrawalId){
         verifyWithdrawal(withdrawalId);
         withdrawalRepo.deleteById(withdrawalId);
     }
-
-
-
 }

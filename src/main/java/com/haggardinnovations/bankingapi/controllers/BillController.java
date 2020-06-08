@@ -37,11 +37,12 @@ public class BillController {
         return new ResponseEntity<>(bill, HttpStatus.OK);
     }
 
-    @RequestMapping(value = " /customers/{customerId}/bills", method = RequestMethod.GET)
-    public ResponseEntity<List<Bill>> getBillsByCustomerId(@PathVariable Long id){
-        List<Bill> bills = billService.getBillsByCustomerId(id);
-        return new ResponseEntity<>(bills, HttpStatus.OK);
-    }
+
+//    @RequestMapping(value = " /customers/{customerId}/bills", method = RequestMethod.GET)
+//    public ResponseEntity<List<Bill>> getBillsByCustomerId(@PathVariable Long id){
+//        List<Bill> bills = billService.getBillsByCustomerId(id);
+//        return new ResponseEntity<>(bills, HttpStatus.OK);
+//    }
 
     @RequestMapping(value = "/accounts/{accountId}/bills", method = RequestMethod.POST)
     public ResponseEntity<?> createBill(@RequestBody Bill bill) {

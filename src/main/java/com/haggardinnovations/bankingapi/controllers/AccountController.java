@@ -25,7 +25,6 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-
     @RequestMapping(value = "/accounts", method = RequestMethod.GET)
     private ResponseEntity<List<Account>> getAllAccounts() {
         List<Account> accounts =  accountService.getAllAccounts();
@@ -53,11 +52,12 @@ public class AccountController {
 
     }
 
-//        @RequestMapping(value = "/customers/{customerId}/accounts", method = RequestMethod.GET)
-//        private ResponseEntity<List<Account>> getAllAccountsForCustomer(@PathVariable Long customerId) {
-//            List<Account> cId = accountService.getAllAccountsByCustomer(customerId);
-//            return new ResponseEntity<>(cId, HttpStatus.OK);
-//    }
+        @RequestMapping(value = "/customers/{customerId}/accounts", method = RequestMethod.GET)
+        private ResponseEntity<List<Account>> getAllAccountsForCustomer(@PathVariable Long customerId) {
+            List<Account> cId = accountService.getAllAccountsByCustomer(customerId);
+            return new ResponseEntity<>(cId, HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateAccount(@RequestBody Account account, @PathVariable Long id) {

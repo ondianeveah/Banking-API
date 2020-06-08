@@ -34,8 +34,13 @@ public class AccountService {
         return accountRepo.findById(id);
     }
 
-    public void addAccount(Account account) {
-        accountRepo.save(account);
+
+    public void addAccount(Account account, Long customerId) {
+        for (Customer customers : customerRepo.findAll()) {
+            if (customers.getId().equals(customerId)) {
+                accountRepo.save(account);
+            }
+        }
     }
 
     public List<Account> getAllAccountsByCustomer(Long customerId) {
@@ -47,8 +52,14 @@ public class AccountService {
 
 
     public void updateAccount(Long id, Account account) {
-        verifyAccount(id);
-        accountRepo.save(account);
+//        verifyAccount(id);
+        for (Account a : accountRepo.findAll()){
+            if (a.getId().equals(id)){
+                accountRepo.save(account);
+
+            }
+        }
+
     }
 
     public void deleteAccountById(Long id) {

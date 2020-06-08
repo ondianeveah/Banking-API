@@ -35,7 +35,7 @@ public class Account {
 
     }
 
-    public Account(Long id, AccountType type, String nickname, Integer rewards, Double balance, @NotEmpty @Size(min = 1) Customer customer) {
+    public Account(Long id, AccountType type, String nickname, Integer rewards, Double balance, @NotEmpty Customer customer) {
         this.id = id;
         this.type = type;
         this.nickname = nickname;

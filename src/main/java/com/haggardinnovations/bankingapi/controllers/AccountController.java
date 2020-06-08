@@ -25,7 +25,6 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-
     @RequestMapping(value = "/accounts", method = RequestMethod.GET)
     private ResponseEntity<List<Account>> getAllAccounts() {
         List<Account> accounts =  accountService.getAllAccounts();

@@ -5,6 +5,7 @@ import com.haggardinnovations.bankingapi.domains.Bill;
 import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
 import com.haggardinnovations.bankingapi.repositories.AccountRepo;
 import com.haggardinnovations.bankingapi.repositories.BillRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,12 +15,11 @@ import java.util.Optional;
 @Service
 public class BillService {
 
+    @Autowired
     private BillRepo billRepo;
+    @Autowired
     private AccountRepo accountRepo;
 
-    public BillService(BillRepo billRepo) {
-        this.billRepo = billRepo;
-    }
 
     public List<Bill> getAllBillsByAccountId(Long accountId) {
         List<Bill> bills = (ArrayList<Bill>) billRepo.findAll();
@@ -35,12 +35,16 @@ public class BillService {
     public Optional<Bill> getBillById(Long id){
         return billRepo.findById(id);
     }
-    public List<Bill> getBillsByCustomerId(Long customerId){
-        ArrayList<Bill> bills = (ArrayList<Bill>) billRepo.findAll();
-        verifyBillById(customerId);
-        bills.size();
-        return bills;
-    }
+
+
+
+//    public List<Bill> getBillsByCustomerId(Long customerId){
+//        List<Bill> listOfCustomers = new ArrayList<>();
+//        billRepo.findByCustomerId(customerId).forEach(listOfCustomers::add);
+//        return listOfCustomers;
+//    }
+
+
     public Bill createBill(Bill bill){
         billRepo.save(bill);
         return bill;
@@ -50,11 +54,10 @@ public class BillService {
         billRepo.save(bill);
         return bill;
     }
-    public Bill deleteBill (Long id, Bill bill){
-        verifyBillById(id);
-        billRepo.findById(id);
-        billRepo.delete(bill);
-        return bill;
+    public Long deleteBill (Long billId){
+        verifyBillById(billId);
+        billRepo.deleteById(billId);
+        return billId;
     }
 
     public void verifyBillById(Long billId) throws ResourceNotFoundException {
@@ -69,6 +72,4 @@ public class BillService {
             throw new ResourceNotFoundException("Account with id " + accountId + " not found");
         }
     }
-
-
 }

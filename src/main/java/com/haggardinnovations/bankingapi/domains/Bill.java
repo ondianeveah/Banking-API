@@ -37,14 +37,15 @@ public class Bill {
     @Column(name = "PAYMENT_AMOUNT")
     private Double payment_amount;
 
-    @Column(name = "ACCOUNT_ID")
-    private String account_id;
+    @ManyToOne
+    @JoinColumn(name = "ACCOUNT_ID")
+    private Account account_id;
 
 
     public Bill(){
     }
 
-    public Bill(Long id, BillStatus status, String payee, String nickname, String creation_date, String payment_date, Integer recurring_date, String upcoming_payment_date, Double payment_amount, String account_id) {
+    public Bill(Long id, BillStatus status, String payee, String nickname, String creation_date, String payment_date, Integer recurring_date, String upcoming_payment_date, Double payment_amount, Account account_id) {
         this.id = id;
         this.status = status;
         this.payee = payee;
@@ -129,11 +130,11 @@ public class Bill {
         this.payment_amount = payment_amount;
     }
 
-    public String getAccount_id() {
+    public Account getAccount_id() {
         return account_id;
     }
 
-    public void setAccount_id(String account_id) {
+    public void setAccount_id(Account account_id) {
         this.account_id = account_id;
     }
 

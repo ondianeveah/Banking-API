@@ -34,10 +34,4 @@ public class DepositService {
     public void deleteDeposit(Long id){
         depositRepo.deleteById(id);
     }
-
-
-
-
-
-
 }

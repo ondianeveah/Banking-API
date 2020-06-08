@@ -7,10 +7,10 @@ import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
 import com.haggardinnovations.bankingapi.repositories.AccountRepo;
 import com.haggardinnovations.bankingapi.repositories.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,36 +40,45 @@ public class CustomerService {
     public List<Customer> getAllCustomers(){
         List<Customer> listOfCustomers = new ArrayList<>();
         customerRepo.findAll().forEach(listOfCustomers::add);
+//        casting
+//        verifyCustomer((long)listOfCustomers.size());
         return listOfCustomers;
     }
     public Optional<Customer> getCustomerById(Long id) {
         verifyCustomer(id);
-       Optional<Customer> customer = customerRepo.findById(id);
-       return customer;
+        return customerRepo.findById(id);
     }
 
-    public void createCustomer(Customer customer){
-         customerRepo.save(customer);
+    public Customer createCustomer(Customer customer){
+         return customerRepo.save(customer);
     }
 
-    public Customer getCustomerByAccountId(Long id) throws ResourceNotFoundException{
-        verifyAccount(id);
-        List<Account> accounts = new ArrayList<>();
-        for(Account account : accounts){
-            if(account.getId().equals(id)){
-                return account.getCustomer();
+    public Customer getCustomersByAccountId(Long accountId) throws ResourceNotFoundException{
+      //  verifyAccount(accountId);
+     //   List<String> list = new ArrayList<>();
+        Customer customer;
+        for(Account account : accountRepo.findAll()){
+            if(account.getId().equals(accountId)){
+                customer = account.getCustomer();
+                return customer;
             }
         }
         throw  new ResourceNotFoundException();
     }
 
+//    List<String> list = new ArrayList<>();
+//		list.add("Ondia");
+//		list.add("Brown");
+//		for(String loop : list ){
+//        System.out.println(loop);
+//    }
+
     public void deleteCustomerById(Long id){
         customerRepo.deleteById(id);
     }
 
-    public void updateCustomerById(Long id, Customer customer){
-        verifyCustomer(id);
-        customerRepo.save(customer);
-    }
-
+//    public Customer updateCustomerById(Long id, Customer customer){
+//        verifyCustomer(customer.getId());
+//        return customerRepo.save(id);
+//    }
 }

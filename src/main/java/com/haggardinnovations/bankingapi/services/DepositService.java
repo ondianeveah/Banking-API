@@ -55,5 +55,4 @@ public class DepositService {
 //    List<Account> listOfCustomerAccounts = new ArrayList<>();
 //        accountRepo.findByCustomerId(customerId).forEach(listOfCustomerAccounts::add);
 //        return listOfCustomerAccounts;
-
 }

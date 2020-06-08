@@ -37,6 +37,7 @@ public class BillController {
         return new ResponseEntity<>(bill, HttpStatus.OK);
     }
 
+
 //    @RequestMapping(value = " /customers/{customerId}/bills", method = RequestMethod.GET)
 //    public ResponseEntity<List<Bill>> getBillsByCustomerId(@PathVariable Long id){
 //        List<Bill> bills = billService.getBillsByCustomerId(id);

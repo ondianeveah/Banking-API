@@ -34,10 +34,14 @@ public class Withdrawal {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "ACCOUNT_ID")
+    private Account account;
+
     public Withdrawal() {
     }
 
-    public Withdrawal(Long id, TransactionType type, String transaction_date, TransactionStatus status, Long payer_id, TransactionMedium medium, Double amount, String description) {
+    public Withdrawal(Long id, TransactionType type, String transaction_date, TransactionStatus status, Long payer_id, TransactionMedium medium, Double amount, String description, Account account) {
         this.id = id;
         this.type = type;
         this.transaction_date = transaction_date;
@@ -46,6 +50,7 @@ public class Withdrawal {
         this.medium = medium;
         this.amount = amount;
         this.description = description;
+        this.account = account;
     }
 
     public Long getId() {
@@ -112,6 +117,14 @@ public class Withdrawal {
         this.description = description;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     @Override
     public String toString() {
         return "Withdrawal{" +
@@ -123,6 +136,7 @@ public class Withdrawal {
                 ", medium=" + medium +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
+                ", account=" + account +
                 '}';
     }
 }

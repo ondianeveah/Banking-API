@@ -42,13 +42,14 @@ public class AccountService {
         List<Account> listOfCustomerAccounts = new ArrayList<>();
         accountRepo.findByCustomerId(customerId).forEach(listOfCustomerAccounts::add);
         return listOfCustomerAccounts;
+
     }
+
 
     public void updateAccount(Long id, Account account) {
         verifyAccount(id);
         accountRepo.save(account);
     }
-
 
     public void deleteAccountById(Long id) {
         verifyAccount(id);
@@ -65,4 +66,5 @@ public class AccountService {
         }
     }
 }
+
 

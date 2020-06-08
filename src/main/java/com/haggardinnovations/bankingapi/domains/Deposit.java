@@ -24,8 +24,8 @@ public class Deposit {
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
 
-    @Column(name = "PAYER_ID")
-    private Long payer_id;
+    @Column(name = "PAYEE_ID")
+    private Long payee_id;
 
     @Enumerated(EnumType.STRING)
     private TransactionMedium medium;
@@ -36,18 +36,23 @@ public class Deposit {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "ACCOUNT_ID")
+    private Account account;
+
     public Deposit() {
     }
 
-    public Deposit(@NotEmpty Long id, @NotEmpty TransactionType type, @NotEmpty String transactionDate, @NotEmpty TransactionStatus status, Long payer_id, TransactionMedium medium, @NotEmpty Double amount, String description) {
+    public Deposit(Long id, TransactionType type, String transactionDate, TransactionStatus status, Long payee_id, TransactionMedium medium, Double amount, String description, Account account) {
         this.id = id;
         this.type = type;
         this.transactionDate = transactionDate;
         this.status = status;
-        this.payer_id = payer_id;
+        this.payee_id = payee_id;
         this.medium = medium;
         this.amount = amount;
         this.description = description;
+        this.account = account;
     }
 
     public Long getId() {
@@ -82,12 +87,13 @@ public class Deposit {
         this.status = status;
     }
 
-    public Long getPayer_id() {
-        return payer_id;
+
+    public Long getPayee_id() {
+        return payee_id;
     }
 
-    public void setPayer_id(Long payer_id) {
-        this.payer_id = payer_id;
+    public void setPayee_id(Long payee_id) {
+        this.payee_id = payee_id;
     }
 
     public TransactionMedium getMedium() {
@@ -114,6 +120,14 @@ public class Deposit {
         this.description = description;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     @Override
     public String toString() {
         return "Deposit{" +
@@ -121,10 +135,11 @@ public class Deposit {
                 ", type=" + type +
                 ", transactionDate='" + transactionDate + '\'' +
                 ", status=" + status +
-                ", payer_id=" + payer_id +
+                ", payee_id=" + payee_id +
                 ", medium=" + medium +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
+                ", account=" + account +
                 '}';
     }
 }

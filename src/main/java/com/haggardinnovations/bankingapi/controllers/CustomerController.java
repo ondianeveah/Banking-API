@@ -35,8 +35,8 @@ public class CustomerController {
      message that says (.....) and you're returning a list of all customers and whether or not
      the HTTP request has been successfully completed.*/
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
-    public ResponseEntity<List<Customer>> getAllCustomers(){
-        List<Customer> customers = customerService.getAllCustomers();
+    public ResponseEntity<Iterable<Customer>> getAllCustomers(){
+        Iterable<Customer> customers = customerService.getAllCustomers();
         log.info("Get All Customers " + customers);
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
@@ -73,10 +73,10 @@ public class CustomerController {
 
 
     @RequestMapping(value = "/customers/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateCustomerById(@PathVariable Long id, @RequestBody Customer customer){
-        customer.setId(id);
-        Customer c = customerService.updateCustomerById(customer);
-        log.info("Put Customers By Id " + c);
+    public ResponseEntity<?> updateCustomerById(@PathVariable Long customerId, @RequestBody Customer customer){
+    //    customer.setId(id);
+        customerService.updateCustomerById(customerId, customer);
+      //  log.info("Put Customers By Id " + c);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -37,10 +37,11 @@ public class CustomerService {
         }
     }
 
-    public List<Customer> getAllCustomers() {
-        List<Customer> listOfCustomers = new ArrayList<>();
-        customerRepo.findAll().forEach(listOfCustomers::add);
-        return listOfCustomers;
+    public Iterable<Customer> getAllCustomers() {
+      //  List<Customer> listOfCustomers = new ArrayList<>();
+        return customerRepo.findAll();
+                //.forEach(listOfCustomers::add);
+      //  return listOfCustomers;
     }
 
     public Optional<Customer> getCustomerById(Long id) {
@@ -55,7 +56,7 @@ public class CustomerService {
     public Customer getCustomersByAccountId(Long accountId) throws ResourceNotFoundException {
         //  verifyAccount(accountId);
         Customer customer;
-        for (Account account : accountRepo.findByCustomerId(accountId)) {
+        for (Account account : accountRepo.findAll()) {
             if (account.getId().equals(accountId)) {
                 customer = account.getCustomer();
                 return customer;
@@ -70,8 +71,12 @@ public class CustomerService {
     }
 
 
-    public Customer updateCustomerById(Customer customer){
+    public void updateCustomerById(Long customerId, Customer customer){
         verifyCustomer(customer.getId());
-        return customerRepo.save(customer);
+        for(Customer c : customerRepo.findAll()){
+            if(c.getId().equals(customerId)){
+                customerRepo.save(customer);
+            }
+        }
     }
 }

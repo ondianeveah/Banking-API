@@ -27,21 +27,20 @@ public class Account {
     private Double balance;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @NotEmpty
     @JoinColumn(name = "CUSTOMER_ID")
-    private Customer customer;
+    private Customer customerId;
 
     public Account(){
 
     }
 
-    public Account(Long id, AccountType type, String nickname, Integer rewards, Double balance, @NotEmpty Customer customer) {
+    public Account(Long id, AccountType type, String nickname, Integer rewards, Double balance, Customer customerId) {
         this.id = id;
         this.type = type;
         this.nickname = nickname;
         this.rewards = rewards;
         this.balance = balance;
-        this.customer = customer;
+        this.customerId = customerId;
     }
 
     public Long getId() {
@@ -76,12 +75,12 @@ public class Account {
         this.balance = balance;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Customer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerId(Customer customerId) {
+        this.customerId = customerId;
     }
 
     @Override
@@ -92,7 +91,7 @@ public class Account {
                 ", nickname='" + nickname + '\'' +
                 ", rewards=" + rewards +
                 ", balance=" + balance +
-                ", customer=" + customer +
+                ", customerId=" + customerId +
                 '}';
     }
 }

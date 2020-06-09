@@ -2,7 +2,7 @@ package com.haggardinnovations.bankingapi.controllers;
 
 
 import com.haggardinnovations.bankingapi.domains.Account;
-import com.haggardinnovations.bankingapi.repositories.AccountRepo;
+
 import com.haggardinnovations.bankingapi.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,8 +19,7 @@ import java.util.Optional;
 @RestController
 public class AccountController {
 
-    @Autowired
-    private AccountRepo accountRepo;
+
 
     @Autowired
     private AccountService accountService;
@@ -37,7 +36,7 @@ public class AccountController {
         HttpHeaders httpHeaders = new HttpHeaders();
         URI newAccountUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/account")
+                .path("/accounts")
                 .buildAndExpand(account.getId())
                 .toUri();
         httpHeaders.setLocation(newAccountUri);

@@ -58,7 +58,7 @@ public class CustomerService {
         Customer customer;
         for (Account account : accountRepo.findAll()) {
             if (account.getId().equals(accountId)) {
-                customer = account.getCustomer();
+                customer = account.getCustomerId();
                 return customer;
             }
         }

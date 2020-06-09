@@ -37,7 +37,7 @@ public class DepositController {
         HttpHeaders headers = new HttpHeaders();
         URI newWithdrawalUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("{id}")
+                .path("/deposits")
                 .buildAndExpand(deposit.getId())
                 .toUri();
         headers.setLocation(newWithdrawalUri);

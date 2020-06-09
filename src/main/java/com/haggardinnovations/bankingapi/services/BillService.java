@@ -72,6 +72,4 @@ public class BillService {
             throw new ResourceNotFoundException("Account with id " + accountId + " not found");
         }
     }
-
-
 }

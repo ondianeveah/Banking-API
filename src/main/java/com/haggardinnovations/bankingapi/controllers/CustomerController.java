@@ -2,10 +2,10 @@ package com.haggardinnovations.bankingapi.controllers;
 
 import com.haggardinnovations.bankingapi.BankingApiApplication;
 
-import com.haggardinnovations.bankingapi.domains.Account;
+
 
 import com.haggardinnovations.bankingapi.domains.Customer;
-import com.haggardinnovations.bankingapi.repositories.CustomerRepo;
+
 import com.haggardinnovations.bankingapi.services.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +29,6 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @Autowired
-    private CustomerRepo customerRepo;
 
     /*Starts with an endpoint and at this endpoint you're sending in a request to get something
     back and this case that something is a list of all customers, so you make a call to the service
@@ -50,7 +48,7 @@ public class CustomerController {
         HttpHeaders httpHeaders = new HttpHeaders();
         URI newCustomerUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{id}")
+                .path("/customers")
                 .buildAndExpand(customer.getId())
                 .toUri();
         httpHeaders.setLocation(newCustomerUri);

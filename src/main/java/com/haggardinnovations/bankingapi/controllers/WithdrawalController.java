@@ -1,10 +1,9 @@
 package com.haggardinnovations.bankingapi.controllers;
 
 
-import com.haggardinnovations.bankingapi.domains.Account;
+
 import com.haggardinnovations.bankingapi.domains.Withdrawal;
-import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
-import com.haggardinnovations.bankingapi.repositories.WithdrawalRepo;
+
 import com.haggardinnovations.bankingapi.services.WithdrawalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,24 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
+
 import java.util.Optional;
 
 @RestController
 public class WithdrawalController {
 
-    @Autowired
-    private WithdrawalRepo withdrawalRepo;
+
 
     @Autowired
     private WithdrawalService withdrawalService;
 
-    protected void verifyWithdrawal(Long withdrawalId) throws ResourceNotFoundException{
-        Optional<Withdrawal> withdrawal = withdrawalRepo.findById(withdrawalId);
-        if (withdrawal == null){
-            throw new ResourceNotFoundException("Withdrawal with id" + withdrawalId + " not found");
-        }
-    }
 
     @RequestMapping(value = "/accounts/{accountId}/withdrawals", method = RequestMethod.GET)
     public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawals(@PathVariable Long accountId){
@@ -51,7 +43,7 @@ public class WithdrawalController {
         HttpHeaders headers = new HttpHeaders();
         URI newWithdrawalUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("{id}")
+                .path("/withdrawals")
                 .buildAndExpand(withdrawal.getId())
                 .toUri();
         headers.setLocation(newWithdrawalUri);

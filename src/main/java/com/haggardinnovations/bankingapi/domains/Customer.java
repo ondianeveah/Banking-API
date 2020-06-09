@@ -20,6 +20,7 @@ public class Customer {
     @Column(name = "LAST_NAME")
     private String last_name;
 
+    //FetchType.EAGER - data that is required to be fetched eagerly
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy
     @Size(min = 1, max = 3)

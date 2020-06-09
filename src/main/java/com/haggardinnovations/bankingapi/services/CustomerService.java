@@ -23,21 +23,21 @@ public class CustomerService {
     @Autowired
     private AccountRepo accountRepo;
 
-    public void verifyCustomer(Long id) throws ResourceNotFoundException{
+    public void verifyCustomer(Long id) throws ResourceNotFoundException {
         Optional<Customer> customer = customerRepo.findById(id);
-        if(customer.isEmpty()){
+        if (customer.isEmpty()) {
             throw new ResourceNotFoundException("Customer with id " + id + " not found.");
         }
     }
 
-    public void verifyAccount(Long id) throws ResourceNotFoundException{
+    public void verifyAccount(Long id) throws ResourceNotFoundException {
         Optional<Account> account = accountRepo.findById(id);
-        if(account.isEmpty()){
+        if (account.isEmpty()) {
             throw new ResourceNotFoundException("Account with id " + id + " not found.");
         }
     }
 
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers() {
         List<Customer> listOfCustomers = new ArrayList<>();
         customerRepo.findAll().forEach(listOfCustomers::add);
         return listOfCustomers;
@@ -45,31 +45,33 @@ public class CustomerService {
 
     public Optional<Customer> getCustomerById(Long id) {
         verifyCustomer(id);
-       Optional<Customer> customer = customerRepo.findById(id);
-       return customer;
+        return customerRepo.findById(id);
     }
 
-    public void createCustomer(Customer customer){
-         customerRepo.save(customer);
+    public Customer createCustomer(Customer customer) {
+        return customerRepo.save(customer);
     }
 
-    public Customer getCustomerByAccountId(Long id) throws ResourceNotFoundException{
-        verifyAccount(id);
-        List<Account> accounts = new ArrayList<>();
-        for(Account account : accounts){
-            if(account.getId().equals(id)){
-                return account.getCustomer();
+    public Customer getCustomersByAccountId(Long accountId) throws ResourceNotFoundException {
+        //  verifyAccount(accountId);
+        Customer customer;
+        for (Account account : accountRepo.findByCustomerId(accountId)) {
+            if (account.getId().equals(accountId)) {
+                customer = account.getCustomer();
+                return customer;
             }
         }
-        throw  new ResourceNotFoundException();
+        throw new ResourceNotFoundException();
     }
 
-    public void deleteCustomerById(Long id){
+
+    public void deleteCustomerById(Long id) {
         customerRepo.deleteById(id);
     }
 
-    public void updateCustomerById(Long id, Customer customer){
-        verifyCustomer(id);
-        customerRepo.save(customer);
+
+    public Customer updateCustomerById(Customer customer){
+        verifyCustomer(customer.getId());
+        return customerRepo.save(customer);
     }
 }

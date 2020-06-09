@@ -20,9 +20,6 @@ public class BillService {
     @Autowired
     private AccountRepo accountRepo;
 
-    public BillService(BillRepo billRepo) {
-        this.billRepo = billRepo;
-    }
 
     public List<Bill> getAllBillsByAccountId(Long accountId) {
         List<Bill> bills = (ArrayList<Bill>) billRepo.findAll();
@@ -39,11 +36,14 @@ public class BillService {
         return billRepo.findById(id);
     }
 
+
+
 //    public List<Bill> getBillsByCustomerId(Long customerId){
 //        List<Bill> listOfCustomers = new ArrayList<>();
 //        billRepo.findByCustomerId(customerId).forEach(listOfCustomers::add);
 //        return listOfCustomers;
 //    }
+
 
     public Bill createBill(Bill bill){
         billRepo.save(bill);

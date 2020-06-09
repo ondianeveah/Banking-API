@@ -55,8 +55,6 @@ public class DepositService {
         depositRepo.deleteById(id);
     }
 
-//    List<Account> listOfCustomerAccounts = new ArrayList<>();
-//        accountRepo.findByCustomerId(customerId).forEach(listOfCustomerAccounts::add);
-//        return listOfCustomerAccounts;
+
 
 }

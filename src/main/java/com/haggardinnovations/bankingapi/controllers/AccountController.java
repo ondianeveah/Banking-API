@@ -32,12 +32,12 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/customers/{customerId}/accounts", method = RequestMethod.POST)
-    public ResponseEntity<?> addAccount(@Valid @RequestBody Account account) {
-        accountService.addAccount(account);
+    public ResponseEntity<?> addAccount(@Valid @RequestBody Account account, @PathVariable Long customerId) {
+        accountService.addAccount(account, customerId);
         HttpHeaders httpHeaders = new HttpHeaders();
         URI newAccountUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{id}")
+                .path("/account")
                 .buildAndExpand(account.getId())
                 .toUri();
         httpHeaders.setLocation(newAccountUri);

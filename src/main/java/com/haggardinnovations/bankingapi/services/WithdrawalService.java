@@ -2,6 +2,7 @@ package com.haggardinnovations.bankingapi.services;
 
 import com.haggardinnovations.bankingapi.domains.Withdrawal;
 import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
+import com.haggardinnovations.bankingapi.repositories.AccountRepo;
 import com.haggardinnovations.bankingapi.repositories.WithdrawalRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class WithdrawalService {
 
     @Autowired
     private WithdrawalRepo withdrawalRepo;
+
+    @Autowired
+    private AccountRepo accountRepo;
 
     protected void verifyWithdrawal(Long withdrawalId) throws ResourceNotFoundException {
         Optional<Withdrawal> withdrawal = withdrawalRepo.findById(withdrawalId);

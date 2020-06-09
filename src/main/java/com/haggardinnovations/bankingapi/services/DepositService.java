@@ -23,36 +23,36 @@ public class DepositService {
     @Autowired
     private AccountRepo accountRepo;
 
-    protected void verifyWithdrawal(Long depositId) throws ResourceNotFoundException {
+    protected void verifyDeposit(Long depositId) throws ResourceNotFoundException {
         Optional<Deposit> deposit = depositRepo.findById(depositId);
         if (deposit == null){
             throw new ResourceNotFoundException("Deposit with id" + depositId + " not found");
         }
     }
 
-//    public List<Deposit> getAllDepositsByAccount(Long accountId){
-//        List<Deposit> depositList = new ArrayList<>();
-//        depositRepo.findByAccountId(accountId).forEach(depositList::add);
-//        return depositList;
-//    }
-
-    public Optional<Deposit> getOneDepositById(Long accountId){
-        return depositRepo.findById(accountId);
+    public List<Deposit> getAllDepositsByAccount(Long accountId){
+        List<Deposit> depositList = new ArrayList<>();
+        depositRepo.findAll().forEach(depositList::add);
+        return depositList;
     }
 
-    public void createDeposit(Deposit deposit, Long accountId){
+    public Optional<Deposit> getDepositById(Long depositId){
+        verifyDeposit(depositId);
+        return depositRepo.findById(depositId);
+    }
+
+    public void createDeposit(Deposit deposit){
         depositRepo.save(deposit);
     }
 
-    public void updateDeposit(Deposit deposit, Long depositId){
+    public void updateDeposit(Deposit deposit, Long id){
+        verifyDeposit(id);
         depositRepo.save(deposit);
     }
 
     public void deleteDeposit(Long id){
+        verifyDeposit(id);
         depositRepo.deleteById(id);
     }
 
-//    List<Account> listOfCustomerAccounts = new ArrayList<>();
-//        accountRepo.findByCustomerId(customerId).forEach(listOfCustomerAccounts::add);
-//        return listOfCustomerAccounts;
 }

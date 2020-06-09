@@ -1,6 +1,9 @@
 package com.haggardinnovations.bankingapi.controllers;
 
 import com.haggardinnovations.bankingapi.BankingApiApplication;
+
+import com.haggardinnovations.bankingapi.domains.Account;
+
 import com.haggardinnovations.bankingapi.domains.Customer;
 import com.haggardinnovations.bankingapi.repositories.CustomerRepo;
 import com.haggardinnovations.bankingapi.services.CustomerService;

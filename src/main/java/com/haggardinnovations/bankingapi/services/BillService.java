@@ -36,16 +36,24 @@ public class BillService {
         return billRepo.findById(id);
     }
 
-    public List<Bill> getBillsByCustomerId(Long customerId){
-        List<Bill> listOfCustomers = new ArrayList<>();
+    // GOAL: Get the bills associated with the customer id
+
+    // Step 1: Create an empty list of bills to hold bills that have been filtered by accountId
+    // Step 2: Get all accounts by the customerId
+    // Step 3: For each account loop through the list of accounts by customerId
+    // Step 4: Retrieve all bills by the accountId
+    // Step 4a: Add the bills by accountId to a list of bills
+    // Step 5: Return the list of bills
+
+    public List<Bill> getBillsByCustomerId(Long customerId) {
+        List<Bill> billsByAccountId = new ArrayList<>();
         List<Account> accountsByCustomer = new ArrayList<>(accountRepo.findByCustomerId(customerId));
 
         for (Account account: accountsByCustomer) {
-            Iterable<Bill> allBills = billRepo.findAll();
-            
+            billsByAccountId.addAll(billRepo.findByAccountId(account.getId()));
         }
 
-        return listOfCustomers;
+        return billsByAccountId;
     }
 
     public Bill createBill(Bill bill){

@@ -34,10 +34,17 @@ public class AccountService {
         return accountRepo.findById(id);
     }
 
+    // GOAL: Add an account by a customerId
+
+    // Step 1: Loop through all the customers in the customerRepo
+    // Step 1a: Check if the customer's id matches the passed customerId
+    // Step 2: Set the account's customer object to the passed customer object
+    // Step 3: Save the account to the accountRepo
 
     public void addAccount(Account account, Long customerId) {
-        for (Customer customers : customerRepo.findAll()) {
-            if (customers.getId().equals(customerId)) {
+        for (Customer customer : customerRepo.findAll()) {
+            if (customer.getId().equals(customerId)) {
+                account.setCustomer(customer);
                 accountRepo.save(account);
             }
         }

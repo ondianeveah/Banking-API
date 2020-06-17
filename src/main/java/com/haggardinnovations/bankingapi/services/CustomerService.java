@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,7 +57,7 @@ public class CustomerService {
         Customer customer;
         for (Account account : accountRepo.findAll()) {
             if (account.getId().equals(accountId)) {
-                customer = account.getCustomerId();
+                customer = account.getCustomer();
                 return customer;
             }
         }

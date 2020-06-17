@@ -1,8 +1,7 @@
 package com.haggardinnovations.bankingapi.controllers;
 
 import com.haggardinnovations.bankingapi.domains.Bill;
-import com.haggardinnovations.bankingapi.domains.Withdrawal;
-import com.haggardinnovations.bankingapi.repositories.BillRepo;
+
 import com.haggardinnovations.bankingapi.services.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,8 +20,6 @@ public class BillController {
     @Autowired
     private BillService billService;
 
-    @Autowired
-    private BillRepo billRepo;
 
 
     @RequestMapping(value = "/accounts/{accountId}/bills", method = RequestMethod.GET)
@@ -50,7 +47,7 @@ public class BillController {
         HttpHeaders headers = new HttpHeaders();
         URI newWithdrawalUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("{id}")
+                .path("/bills")
                 .buildAndExpand(bill.getId())
                 .toUri();
         headers.setLocation(newWithdrawalUri);

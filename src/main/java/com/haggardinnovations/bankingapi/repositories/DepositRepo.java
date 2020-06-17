@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface DepositRepo extends CrudRepository<Deposit, Long> {
 
-//    List<Deposit> findByAccountId(Long accountId);
+
 }

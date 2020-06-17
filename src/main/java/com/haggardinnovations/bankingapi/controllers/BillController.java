@@ -1,8 +1,7 @@
 package com.haggardinnovations.bankingapi.controllers;
 
 import com.haggardinnovations.bankingapi.domains.Bill;
-import com.haggardinnovations.bankingapi.domains.Withdrawal;
-import com.haggardinnovations.bankingapi.repositories.BillRepo;
+
 import com.haggardinnovations.bankingapi.services.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,13 +20,11 @@ public class BillController {
     @Autowired
     private BillService billService;
 
-    @Autowired
-    private BillRepo billRepo;
 
 
     @RequestMapping(value = "/accounts/{accountId}/bills", method = RequestMethod.GET)
-    public ResponseEntity<List<Bill>> getAllBillByAccount(@PathVariable Long id){
-        List<Bill> bills = billService.getAllBillsByAccountId(id);
+    public ResponseEntity<List<Bill>> getAllBillByAccount(@PathVariable Long accountId){
+        List<Bill> bills = billService.getAllBillsByAccountId(accountId);
         return new ResponseEntity<>(bills, HttpStatus.OK);
     }
 
@@ -37,19 +34,20 @@ public class BillController {
         return new ResponseEntity<>(bill, HttpStatus.OK);
     }
 
-//    @RequestMapping(value = " /customers/{customerId}/bills", method = RequestMethod.GET)
-//    public ResponseEntity<List<Bill>> getBillsByCustomerId(@PathVariable Long id){
-//        List<Bill> bills = billService.getBillsByCustomerId(id);
-//        return new ResponseEntity<>(bills, HttpStatus.OK);
-//    }
+
+    @RequestMapping(value = " /customers/{customerId}/bills", method = RequestMethod.GET)
+    public ResponseEntity<List<Bill>> getBillsByCustomerId(@PathVariable Long customerId){
+        List<Bill> bills = billService.getBillsByCustomerId(customerId);
+        return new ResponseEntity<>(bills, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/accounts/{accountId}/bills", method = RequestMethod.POST)
-    public ResponseEntity<?> createBill(@RequestBody Bill bill) {
-        billService.createBill(bill);
+    public ResponseEntity<?> createBill(@RequestBody Bill bill, @PathVariable Long accountId) {
+        billService.createBill(bill, accountId);
         HttpHeaders headers = new HttpHeaders();
         URI newWithdrawalUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("{id}")
+                .path("/bills")
                 .buildAndExpand(bill.getId())
                 .toUri();
         headers.setLocation(newWithdrawalUri);

@@ -17,12 +17,9 @@ public class BillService {
 
     @Autowired
     private BillRepo billRepo;
-    @Autowired
-    private AccountService accountService;
 
-    public BillService(BillRepo billRepo) {
-        this.billRepo = billRepo;
-    }
+    @Autowired
+    private AccountRepo accountRepo;
 
     public List<Bill> getAllBillsByAccountId(Long accountId) {
         List<Bill> bills = (ArrayList<Bill>) billRepo.findAll();
@@ -39,17 +36,41 @@ public class BillService {
         return billRepo.findById(id);
     }
 
-//    public List<Bill> getBillsByCustomerId(Long customerId){
-//        List<Account> accounts = accountService.getAllAccountsByCustomer(customerId);
-//        List<Bill> listOfCustomers = new ArrayList<>();
-//        for (Account account : accounts){
-//            billRepo.findAll().forEach(listOfCustomers ::add);
-//        }
-//        return listOfCustomers;
-//    }
-    public Bill createBill(Bill bill){
+    // GOAL: Get the bills associated with the customer id
+
+    // Step 1: Create an empty list of bills to hold bills that have been filtered by accountId
+    // Step 2: Get all accounts by the customerId
+    // Step 3: For each account loop through the list of accounts by customerId
+    // Step 4: Retrieve all bills by the accountId
+    // Step 4a: Add the bills by accountId to a list of bills
+    // Step 5: Return the list of bills
+
+    public List<Bill> getBillsByCustomerId(Long customerId) {
+        List<Bill> billsByAccountId = new ArrayList<>();
+        List<Account> accountsByCustomer = new ArrayList<>(accountRepo.findByCustomerId(customerId));
+
+        for (Account account: accountsByCustomer) {
+            billsByAccountId.addAll(billRepo.findByAccountId(account.getId()));
+        }
+
+        return billsByAccountId;
+    }
+
+    // GOAL: Create a Bill object by accountId
+
+    // Step 1: Loop through all the accounts in the accountRepo
+    // Step 1a: Check if the account's id matches the passed accountId
+    // Step 2: Set the bill's account object to the looped account object
+    // Step 3: Save the bill to the billRepo
+
+    public void createBill(Bill bill, Long accountId){
+        for (Account account : accountRepo.findAll()) {
+            if (account.getId().equals(accountId)) {
+                bill.setAccount(account);
+
+            }
+        }
         billRepo.save(bill);
-        return bill;
     }
     public Bill updateBill(Long id, Bill bill){
         verifyBillById(id);
@@ -74,6 +95,4 @@ public class BillService {
 //            throw new ResourceNotFoundException("Account with id " + accountId + " not found");
 //        }
 //    }
-
-
 }

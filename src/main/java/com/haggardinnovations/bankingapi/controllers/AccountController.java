@@ -2,7 +2,6 @@ package com.haggardinnovations.bankingapi.controllers;
 
 
 import com.haggardinnovations.bankingapi.domains.Account;
-import com.haggardinnovations.bankingapi.repositories.AccountRepo;
 import com.haggardinnovations.bankingapi.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,9 +19,6 @@ import java.util.Optional;
 public class AccountController {
 
     @Autowired
-    private AccountRepo accountRepo;
-
-    @Autowired
     private AccountService accountService;
 
     @RequestMapping(value = "/accounts", method = RequestMethod.GET)
@@ -32,12 +28,12 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/customers/{customerId}/accounts", method = RequestMethod.POST)
-    public ResponseEntity<?> addAccount(@Valid @RequestBody Account account) {
-        accountService.addAccount(account);
+    public ResponseEntity<?> addAccount(@Valid @RequestBody Account account, @PathVariable Long customerId) {
+        accountService.addAccount(account, customerId);
         HttpHeaders httpHeaders = new HttpHeaders();
         URI newAccountUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{id}")
+                .path("/accounts")
                 .buildAndExpand(account.getId())
                 .toUri();
         httpHeaders.setLocation(newAccountUri);
@@ -45,22 +41,21 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAccountById(@PathVariable Long customerId) {
-        Optional<Account> id = accountService.getAccountById(customerId);
-
+    public ResponseEntity<?> getAccountById(@PathVariable Long accountId) {
+        Optional<Account> id = accountService.getAccountById(accountId);
         return new ResponseEntity<>(id, HttpStatus.OK);
-
     }
 
-        @RequestMapping(value = "/customers/{customerId}/accounts", method = RequestMethod.GET)
-        private ResponseEntity<List<Account>> getAllAccountsForCustomer(@PathVariable Long customerId) {
-            List<Account> cId = accountService.getAllAccountsByCustomer(customerId);
-            return new ResponseEntity<>(cId, HttpStatus.OK);
+    @RequestMapping(value = "/customers/{customerId}/accounts", method = RequestMethod.GET)
+    private ResponseEntity<List<Account>> getAllAccountsForCustomer(@PathVariable Long customerId) {
+        List<Account> cId = accountService.getAllAccountsByCustomer(customerId);
+        return new ResponseEntity<>(cId, HttpStatus.OK);
     }
+
 
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateAccount(@RequestBody Account account, @PathVariable Long id) {
-        accountService.updateAccount(id, account);
+    public ResponseEntity<?> updateAccount(@PathVariable Long accountId, @RequestBody Account account) {
+        accountService.updateAccount(accountId, account);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
@@ -69,9 +64,5 @@ public class AccountController {
         accountService.deleteAccountById(accountId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-
-
 
 }

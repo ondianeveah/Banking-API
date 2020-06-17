@@ -3,8 +3,6 @@ package com.haggardinnovations.bankingapi.domains;
 import com.haggardinnovations.bankingapi.enumerations.AccountType;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Account {
@@ -15,6 +13,7 @@ public class Account {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE")
     private AccountType type;
 
     @Column(name = "NICKNAME")
@@ -27,7 +26,6 @@ public class Account {
     private Double balance;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @NotEmpty
     @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;
 
@@ -35,7 +33,7 @@ public class Account {
 
     }
 
-    public Account(Long id, AccountType type, String nickname, Integer rewards, Double balance, @NotEmpty Customer customer) {
+    public Account(Long id, AccountType type, String nickname, Integer rewards, Double balance, Customer customer) {
         this.id = id;
         this.type = type;
         this.nickname = nickname;
@@ -92,7 +90,7 @@ public class Account {
                 ", nickname='" + nickname + '\'' +
                 ", rewards=" + rewards +
                 ", balance=" + balance +
-                ", customer=" + customer +
+                ", customerId=" + customer +
                 '}';
     }
 }

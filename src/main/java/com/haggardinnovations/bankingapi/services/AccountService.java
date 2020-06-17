@@ -30,7 +30,7 @@ public class AccountService {
 
 
     public Optional<Account> getAccountById(Long id) {
-        verifyAccount(id);
+//        verifyAccount(id);
         return accountRepo.findById(id);
     }
 
@@ -47,7 +47,6 @@ public class AccountService {
         List<Account> listOfCustomerAccounts = new ArrayList<>();
         accountRepo.findByCustomerId(customerId).forEach(listOfCustomerAccounts::add);
         return listOfCustomerAccounts;
-
     }
 
 
@@ -56,12 +55,8 @@ public class AccountService {
         for (Account a : accountRepo.findAll()){
             if (a.getId().equals(id)){
                 accountRepo.save(account);
-
-
             }
         }
-
-
     }
 
     public void deleteAccountById(Long id) {

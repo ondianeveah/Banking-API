@@ -2,7 +2,6 @@ package com.haggardinnovations.bankingapi.controllers;
 
 
 import com.haggardinnovations.bankingapi.domains.Account;
-import com.haggardinnovations.bankingapi.repositories.AccountRepo;
 import com.haggardinnovations.bankingapi.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,9 +17,6 @@ import java.util.Optional;
 
 @RestController
 public class AccountController {
-
-    @Autowired
-    private AccountRepo accountRepo;
 
     @Autowired
     private AccountService accountService;
@@ -47,9 +43,7 @@ public class AccountController {
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.GET)
     public ResponseEntity<?> getAccountById(@PathVariable Long customerId) {
         Optional<Account> id = accountService.getAccountById(customerId);
-
         return new ResponseEntity<>(id, HttpStatus.OK);
-
     }
 
     @RequestMapping(value = "/customers/{customerId}/accounts", method = RequestMethod.GET)

@@ -41,8 +41,8 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAccountById(@PathVariable Long customerId) {
-        Optional<Account> id = accountService.getAccountById(customerId);
+    public ResponseEntity<?> getAccountById(@PathVariable Long accountId) {
+        Optional<Account> id = accountService.getAccountById(accountId);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
@@ -54,8 +54,8 @@ public class AccountController {
 
 
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateAccount(@RequestBody Account account, @PathVariable Long id) {
-        accountService.updateAccount(id, account);
+    public ResponseEntity<?> updateAccount(@PathVariable Long accountId, @RequestBody Account account) {
+        accountService.updateAccount(accountId, account);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 

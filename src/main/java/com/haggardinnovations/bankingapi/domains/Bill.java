@@ -37,14 +37,14 @@ public class Bill {
     private Double payment_amount;
 
     @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID")
-    private Account accountId;
+    @JoinColumn(name = "ACCOUNT")
+    private Account account;
 
 
     public Bill(){
     }
 
-    public Bill(Long id, BillStatus status, String payee, String nickname, String creation_date, String payment_date, Integer recurring_date, String upcoming_payment_date, Double payment_amount, Account accountId) {
+    public Bill(Long id, BillStatus status, String payee, String nickname, String creation_date, String payment_date, Integer recurring_date, String upcoming_payment_date, Double payment_amount, Account account) {
         this.id = id;
         this.status = status;
         this.payee = payee;
@@ -54,7 +54,7 @@ public class Bill {
         this.recurring_date = recurring_date;
         this.upcoming_payment_date = upcoming_payment_date;
         this.payment_amount = payment_amount;
-        this.accountId = accountId;
+        this.account = account;
     }
 
     public BillStatus getStatus() {
@@ -129,12 +129,12 @@ public class Bill {
         this.payment_amount = payment_amount;
     }
 
-    public Account getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountId(Account accountId) {
-        this.accountId = accountId;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override
@@ -149,7 +149,7 @@ public class Bill {
                 ", recurring_date=" + recurring_date +
                 ", upcoming_payment_date='" + upcoming_payment_date + '\'' +
                 ", payment_amount=" + payment_amount +
-                ", account_id='" + accountId + '\'' +
+                ", account_id='" + account + '\'' +
                 '}';
     }
 }

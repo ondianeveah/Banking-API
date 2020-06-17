@@ -68,6 +68,10 @@ public class CustomerService {
         customerRepo.deleteById(id);
     }
 
+    // .getOne()
+    // For each field in the customer you need to check if it's null
+    // If it's not null, you take the data inputted by the user and replace it
+    // Then you save the customer
 
     public Customer updateCustomerById(Customer customer){
         verifyCustomer(customer.getId());

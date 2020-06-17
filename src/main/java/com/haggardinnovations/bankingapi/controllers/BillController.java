@@ -23,8 +23,8 @@ public class BillController {
 
 
     @RequestMapping(value = "/accounts/{accountId}/bills", method = RequestMethod.GET)
-    public ResponseEntity<List<Bill>> getAllBillByAccount(@PathVariable Long id){
-        List<Bill> bills = billService.getAllBillsByAccountId(id);
+    public ResponseEntity<List<Bill>> getAllBillByAccount(@PathVariable Long accountId){
+        List<Bill> bills = billService.getAllBillsByAccountId(accountId);
         return new ResponseEntity<>(bills, HttpStatus.OK);
     }
 
@@ -35,15 +35,15 @@ public class BillController {
     }
 
 
-//    @RequestMapping(value = " /customers/{customerId}/bills", method = RequestMethod.GET)
-//    public ResponseEntity<List<Bill>> getBillsByCustomerId(@PathVariable Long id){
-//        List<Bill> bills = billService.getBillsByCustomerId(id);
-//        return new ResponseEntity<>(bills, HttpStatus.OK);
-//    }
+    @RequestMapping(value = " /customers/{customerId}/bills", method = RequestMethod.GET)
+    public ResponseEntity<List<Bill>> getBillsByCustomerId(@PathVariable Long customerId){
+        List<Bill> bills = billService.getBillsByCustomerId(customerId);
+        return new ResponseEntity<>(bills, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/accounts/{accountId}/bills", method = RequestMethod.POST)
-    public ResponseEntity<?> createBill(@RequestBody Bill bill) {
-        billService.createBill(bill);
+    public ResponseEntity<?> createBill(@RequestBody Bill bill, @PathVariable Long accountId) {
+        billService.createBill(bill, accountId);
         HttpHeaders headers = new HttpHeaders();
         URI newWithdrawalUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

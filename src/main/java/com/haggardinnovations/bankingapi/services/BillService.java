@@ -56,9 +56,21 @@ public class BillService {
         return billsByAccountId;
     }
 
-    public Bill createBill(Bill bill){
+    // GOAL: Create a Bill object by accountId
+
+    // Step 1: Loop through all the accounts in the accountRepo
+    // Step 1a: Check if the account's id matches the passed accountId
+    // Step 2: Set the bill's account object to the looped account object
+    // Step 3: Save the bill to the billRepo
+
+    public void createBill(Bill bill, Long accountId){
+        for (Account account : accountRepo.findAll()) {
+            if (account.getId().equals(accountId)) {
+                bill.setAccount(account);
+
+            }
+        }
         billRepo.save(bill);
-        return bill;
     }
     public Bill updateBill(Long id, Bill bill){
         verifyBillById(id);

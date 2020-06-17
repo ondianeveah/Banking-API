@@ -3,8 +3,6 @@ package com.haggardinnovations.bankingapi.domains;
 import com.haggardinnovations.bankingapi.enumerations.AccountType;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Account {
@@ -15,6 +13,7 @@ public class Account {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE")
     private AccountType type;
 
     @Column(name = "NICKNAME")
@@ -27,20 +26,20 @@ public class Account {
     private Double balance;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CUSTOMER_ID")
-    private Customer customerId;
+    @JoinColumn(name = "CUSTOMER")
+    private Customer customer;
 
     public Account(){
 
     }
 
-    public Account(Long id, AccountType type, String nickname, Integer rewards, Double balance, Customer customerId) {
+    public Account(Long id, AccountType type, String nickname, Integer rewards, Double balance, Customer customer) {
         this.id = id;
         this.type = type;
         this.nickname = nickname;
         this.rewards = rewards;
         this.balance = balance;
-        this.customerId = customerId;
+        this.customer = customer;
     }
 
     public Long getId() {
@@ -75,12 +74,12 @@ public class Account {
         this.balance = balance;
     }
 
-    public Customer getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -91,7 +90,7 @@ public class Account {
                 ", nickname='" + nickname + '\'' +
                 ", rewards=" + rewards +
                 ", balance=" + balance +
-                ", customerId=" + customerId +
+                ", customerId=" + customer +
                 '}';
     }
 }

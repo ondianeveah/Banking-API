@@ -38,7 +38,7 @@ public class AccountService {
 
     // Step 1: Loop through all the customers in the customerRepo
     // Step 1a: Check if the customer's id matches the passed customerId
-    // Step 2: Set the account's customer object to the passed customer object
+    // Step 2: Set the account's customer object to the looped customer object
     // Step 3: Save the account to the accountRepo
 
     public void addAccount(Account account, Long customerId) {
@@ -67,9 +67,7 @@ public class AccountService {
     }
 
     public void deleteAccountById(Long id) {
-        verifyAccount(id);
-        Optional<Customer> customer = customerRepo.findById(id);
-        customerRepo.deleteAll();
+//        verifyAccount(id);
         accountRepo.deleteById(id);
     }
 

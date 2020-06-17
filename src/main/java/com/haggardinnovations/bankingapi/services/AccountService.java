@@ -56,12 +56,22 @@ public class AccountService {
         return listOfCustomerAccounts;
     }
 
+    // GOAL: Update the existing account by the accountId
 
-    public void updateAccount(Long id, Account account) {
+    // Step 1: Loop through our customerRepo using a customer object as our iterator
+    // Step 1a: Using the account object passed, we then set the customer as the iterator customer object
+    // Step 2: Loop through our accountRepo using an account object as our iterator
+    // Step 2a: Check if the account object's id is equal to the passed id
+    // Step 3: Save the passed account object to the accountRepo
+
+    public void updateAccount(Long accountId, Account account) {
 //        verifyAccount(id);
-        for (Account a : accountRepo.findAll()){
-            if (a.getId().equals(id)){
-                accountRepo.save(account);
+        for (Customer customer : customerRepo.findAll()) {
+                account.setCustomer(customer);
+            for (Account a : accountRepo.findAll()){
+                if (a.getId().equals(accountId)){
+                    accountRepo.save(account);
+                }
             }
         }
     }

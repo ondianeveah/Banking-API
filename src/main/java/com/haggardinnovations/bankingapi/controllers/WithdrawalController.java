@@ -19,11 +19,8 @@ import java.util.Optional;
 @RestController
 public class WithdrawalController {
 
-
-
     @Autowired
     private WithdrawalService withdrawalService;
-
 
     @RequestMapping(value = "/accounts/{accountId}/withdrawals", method = RequestMethod.GET)
     public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawals(@PathVariable Long accountId){
@@ -38,8 +35,8 @@ public class WithdrawalController {
     }
 
     @RequestMapping(value = "/accounts/{accountId}/withdrawals", method = RequestMethod.POST)
-    public ResponseEntity<?> createWithdrawal(@RequestBody Withdrawal withdrawal){
-        withdrawalService.createWithdrawal(withdrawal);
+    public ResponseEntity<?> createWithdrawal(@RequestBody Withdrawal withdrawal, @PathVariable Long accountId){
+        withdrawalService.createWithdrawal(withdrawal, accountId);
         HttpHeaders headers = new HttpHeaders();
         URI newWithdrawalUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

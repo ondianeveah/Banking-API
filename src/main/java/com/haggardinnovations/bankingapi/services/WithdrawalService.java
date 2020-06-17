@@ -1,5 +1,6 @@
 package com.haggardinnovations.bankingapi.services;
 
+import com.haggardinnovations.bankingapi.domains.Account;
 import com.haggardinnovations.bankingapi.domains.Withdrawal;
 import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
 import com.haggardinnovations.bankingapi.repositories.AccountRepo;
@@ -27,7 +28,7 @@ public class WithdrawalService {
         }
     }
 
-    public Iterable<Withdrawal> getAllWithdrawals(Long id){
+    public List<Withdrawal> getAllWithdrawals(Long id){
         List<Withdrawal> withdrawals = new ArrayList<>();
         withdrawalRepo.findAll().forEach(withdrawals::add);
         return withdrawals;
@@ -38,12 +39,23 @@ public class WithdrawalService {
         return withdrawalRepo.findById(withdrawalId);
     }
 
-    public void createWithdrawal(Withdrawal withdrawal){
-        withdrawalRepo.save(withdrawal);
+    // GOAL: Create a Withdrawal object by accountId
+
+    // Step 1: Loop through all the accounts in the accountRepo
+    // Step 1a: Check if the account's id matches the passed accountId
+    // Step 2: Set the withdrawals's account object to the looped account object
+    // Step 3: Save the withdrawal to the withdrawalRepo
+
+    public void createWithdrawal(Withdrawal withdrawal, Long accountId){
+        for (Account account : accountRepo.findAll()) {
+            if (account.getId().equals(accountId)) {
+                withdrawal.setAccount(account);
+                withdrawalRepo.save(withdrawal);
+            }
+        }
     }
 
     public void updateWithdrawal(Long withdrawalId, Withdrawal withdrawal){
-        verifyWithdrawal(withdrawalId);
         withdrawalRepo.save(withdrawal);
     }
 

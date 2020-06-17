@@ -23,7 +23,7 @@ public class BillService {
 
     public List<Bill> getAllBillsByAccountId(Long accountId) {
         List<Bill> bills = (ArrayList<Bill>) billRepo.findAll();
-        verifyAccountById(accountId);
+//        verifyAccountById(accountId);
         List<Account> accounts = new ArrayList<>();
         for (Account account : accounts){
             if (account.getId().equals(accountId))
@@ -67,32 +67,40 @@ public class BillService {
         for (Account account : accountRepo.findAll()) {
             if (account.getId().equals(accountId)) {
                 bill.setAccount(account);
-
+                billRepo.save(bill);
             }
         }
-        billRepo.save(bill);
     }
-    public Bill updateBill(Long id, Bill bill){
-        verifyBillById(id);
-        billRepo.save(bill);
-        return bill;
+
+    // GOAL: Update the bill by the bill id
+
+    // Step 1: Looping through all the bills in the bill repo
+    // Step 2: Checking if the id passed matches the current billId
+    //
+
+    public void updateBill(Long billId, Bill bill){
+        for (Bill b : billRepo.findAll()) {
+            if (b.getId().equals(billId)) {
+                billRepo.save(bill);
+            }
+        }
     }
-    public Long deleteBill (Long billId){
-        verifyBillById(billId);
+    public Long deleteBill (Long billId) {
         billRepo.deleteById(billId);
         return billId;
     }
 
-    public void verifyBillById(Long billId) throws ResourceNotFoundException {
-        Optional<Bill> bill = billRepo.findById(billId);
-        if(!bill.isPresent()) {
-            throw new ResourceNotFoundException("Bill with id " + billId + " not found");
-        }
-    }
-    public void verifyAccountById(Long accountId) throws ResourceNotFoundException {
-        Optional<Account> account = accountRepo.findById(accountId);
-        if(!account.isPresent()) {
-            throw new ResourceNotFoundException("Account with id " + accountId + " not found");
-        }
-    }
+//    public void verifyBillById(Long billId) throws ResourceNotFoundException {
+//        Optional<Bill> bill = billRepo.findById(billId);
+//        if(!bill.isPresent()) {
+//            throw new ResourceNotFoundException("Bill with id " + billId + " not found");
+//        }
+//    }
+
+//    public void verifyAccountById(Long accountId) throws ResourceNotFoundException {
+//        Optional<Account> account = accountRepo.findById(accountId);
+//        if(!account.isPresent()) {
+//            throw new ResourceNotFoundException("Account with id " + accountId + " not found");
+//        }
+//    }
 }

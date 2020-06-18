@@ -2,7 +2,6 @@ package com.haggardinnovations.bankingapi.services;
 
 import com.haggardinnovations.bankingapi.domains.Account;
 import com.haggardinnovations.bankingapi.domains.Bill;
-import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
 import com.haggardinnovations.bankingapi.repositories.AccountRepo;
 import com.haggardinnovations.bankingapi.repositories.BillRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,8 @@ public class BillService {
         return bills;
     }
 
-    public Optional<Bill> getBillById(Long id){
-        return billRepo.findById(id);
+    public Optional<Bill> getBillById(Long billId){
+        return billRepo.findById(billId);
     }
 
     // GOAL: Get the bills associated with the customer id
@@ -80,7 +79,11 @@ public class BillService {
     // Step 2a: Check if the account object's id is equal to the passed id
     // Step 3: Save the passed account object to the accountRepo
 
-    public void updateBill(Long billId, Bill bill) {
+
+    public void updateBill(Long billId, Bill bill){
+        for (Account a : accountRepo.findAll()){
+            bill.setAccount(a);
+        }
         for (Bill b : billRepo.findAll()) {
             if (b.getId().equals(billId)) {
                 billRepo.save(bill);
@@ -93,17 +96,5 @@ public class BillService {
         return billId;
     }
 
-//    public void verifyBillById(Long billId) throws ResourceNotFoundException {
-//        Optional<Bill> bill = billRepo.findById(billId);
-//        if(!bill.isPresent()) {
-//            throw new ResourceNotFoundException("Bill with id " + billId + " not found");
-//        }
-//    }
 
-//    public void verifyAccountById(Long accountId) throws ResourceNotFoundException {
-//        Optional<Account> account = accountRepo.findById(accountId);
-//        if(!account.isPresent()) {
-//            throw new ResourceNotFoundException("Account with id " + accountId + " not found");
-//        }
-//    }
 }

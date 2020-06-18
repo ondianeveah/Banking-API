@@ -4,6 +4,7 @@ package com.haggardinnovations.bankingapi.controllers;
 
 import com.haggardinnovations.bankingapi.domains.Withdrawal;
 
+import com.haggardinnovations.bankingapi.dto.SuccessfulResponseDetail;
 import com.haggardinnovations.bankingapi.services.WithdrawalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -25,13 +26,18 @@ public class WithdrawalController {
     @RequestMapping(value = "/accounts/{accountId}/withdrawals", method = RequestMethod.GET)
     public ResponseEntity<Iterable<Withdrawal>> getAllWithdrawals(@PathVariable Long accountId){
         Iterable<Withdrawal> withdrawals = withdrawalService.getAllWithdrawals(accountId);
-        return new ResponseEntity<>(withdrawals, HttpStatus.OK);
+        // Create a SuccessResponseDetail object
+        // Pass in the status code, the string success, and all the withdrawals
+        // Pass the resulting object in the ResponseEntity return
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.OK.value(), "Success", withdrawals);
+        return new ResponseEntity(successfulResponseDetail, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/withdrawals/{withdrawalId}", method = RequestMethod.GET)
     public ResponseEntity<?> getWithdrawalById(@PathVariable Long withdrawalId){
         Optional<Withdrawal> withdrawal = withdrawalService.getWithdrawalById(withdrawalId);
-        return new ResponseEntity<>(withdrawal, HttpStatus.OK);
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.OK.value(), "Success", withdrawal);
+        return new ResponseEntity(successfulResponseDetail, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/accounts/{accountId}/withdrawals", method = RequestMethod.POST)
@@ -44,19 +50,22 @@ public class WithdrawalController {
                 .buildAndExpand(withdrawal.getId())
                 .toUri();
         headers.setLocation(newWithdrawalUri);
-        return new ResponseEntity<>(null, headers, HttpStatus.CREATED);
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.CREATED.value(), "Created withdrawal and deducted it from the account", withdrawal);
+        return new ResponseEntity<>(successfulResponseDetail, headers, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/withdrawals/{withdrawalId}", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateWithdrawal(@RequestBody Withdrawal withdrawal, @PathVariable Long withdrawalId){
         withdrawalService.updateWithdrawal(withdrawalId, withdrawal);
-        return new ResponseEntity<>(withdrawal, HttpStatus.OK);
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.ACCEPTED.value(), "Accepted withdrawal modification", withdrawal);
+        return new ResponseEntity<>(successfulResponseDetail, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/withdrawals/{withdrawalId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteWithdrawal(@PathVariable Long withdrawalId){
         withdrawalService.deleteWithdrawal(withdrawalId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.NO_CONTENT.value(), "Deleted Withdrawal", null);
+        return new ResponseEntity<>(successfulResponseDetail, HttpStatus.NO_CONTENT);
     }
 }
 

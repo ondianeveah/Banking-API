@@ -38,4 +38,7 @@ public class CustomerExceptionHandler {
 
 }
 
+//a request was sent but there a an error handling the request
+//setCode is giving a 404 error status
+//setMessage is just giving a messga that says error
 //

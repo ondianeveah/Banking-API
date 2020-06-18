@@ -42,13 +42,15 @@ public class AccountController {
                 .buildAndExpand(account.getId())
                 .toUri();
         httpHeaders.setLocation(newAccountUri);
-        return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.CREATED.value(), "New account successfully created", account);
+        return new ResponseEntity<>(successfulResponseDetail, httpHeaders, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.GET)
     public ResponseEntity<?> getAccountById(@PathVariable Long accountId) {
         Optional<Account> id = accountService.getAccountById(accountId);
-        return new ResponseEntity<>(id, HttpStatus.OK);
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.OK.value(), "success", id);
+        return new ResponseEntity(successfulResponseDetail, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/customers/{customerId}/accounts", method = RequestMethod.GET)
@@ -61,12 +63,14 @@ public class AccountController {
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateAccount(@PathVariable Long accountId, @RequestBody Account account) {
         accountService.updateAccount(accountId, account);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.ACCEPTED.value(), "Customer account updated");
+        return new ResponseEntity(successfulResponseDetail, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteAccount(@PathVariable Long accountId) {
         accountService.deleteAccountById(accountId);
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.NO_CONTENT.value(), "Account successfully removed");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

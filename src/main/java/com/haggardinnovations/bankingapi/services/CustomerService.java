@@ -65,21 +65,13 @@ public class CustomerService {
     }
 
 
-    public void deleteCustomerById(Long id) {
-        customerRepo.deleteById(id);
-    }
-
     // .getOne()
     // For each field in the customer you need to check if it's null
     // If it's not null, you take the data inputted by the user and replace it
     // Then you save the customer
 
-    public void updateCustomerById(Long customerId, Customer customer){
-        verifyCustomer(customer.getId());
-        for(Customer c : customerRepo.findAll()){
-            if(c.getId().equals(customerId)){
-                customerRepo.save(customer);
-            }
-        }
+    public Customer updateCustomerById(Long customerId, Customer customer){
+      //  verifyCustomer(customer.getId());
+        return customerRepo.save(customer);
     }
 }

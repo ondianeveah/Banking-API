@@ -2,7 +2,6 @@ package com.haggardinnovations.bankingapi.services;
 
 import com.haggardinnovations.bankingapi.domains.Account;
 import com.haggardinnovations.bankingapi.domains.Bill;
-import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
 import com.haggardinnovations.bankingapi.repositories.AccountRepo;
 import com.haggardinnovations.bankingapi.repositories.BillRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,8 @@ public class BillService {
         return bills;
     }
 
-    public Optional<Bill> getBillById(Long id){
-        return billRepo.findById(id);
+    public Optional<Bill> getBillById(Long billId){
+        return billRepo.findById(billId);
     }
 
     // GOAL: Get the bills associated with the customer id
@@ -79,6 +78,9 @@ public class BillService {
     //
 
     public void updateBill(Long billId, Bill bill){
+        for (Account a : accountRepo.findAll()){
+            bill.setAccount(a);
+        }
         for (Bill b : billRepo.findAll()) {
             if (b.getId().equals(billId)) {
                 billRepo.save(bill);

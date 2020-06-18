@@ -29,8 +29,8 @@ public class BillController {
     }
 
     @RequestMapping(value = " /bills/{billId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getBillById(@PathVariable Long id){
-        Optional<Bill> bill = billService.getBillById(id);
+    public ResponseEntity<?> getBillById(@PathVariable Long billId){
+        Optional<Bill> bill = billService.getBillById(billId);
         return new ResponseEntity<>(bill, HttpStatus.OK);
     }
 

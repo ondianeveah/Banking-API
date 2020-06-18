@@ -67,9 +67,9 @@ public class AccountService {
     public void updateAccount(Long accountId, Account account) {
 //        verifyAccount(id);
         for (Customer customer : customerRepo.findAll()) {
-                account.setCustomer(customer);
-            for (Account a : accountRepo.findAll()){
-                if (a.getId().equals(accountId)){
+            account.setCustomer(customer);
+            for (Account account1 : accountRepo.findAll()) {
+                if (account1.getId().equals(accountId)) {
                     accountRepo.save(account);
                 }
             }

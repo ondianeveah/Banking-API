@@ -1,6 +1,7 @@
 package com.haggardinnovations.bankingapi.services;
 
 import com.haggardinnovations.bankingapi.domains.Account;
+import com.haggardinnovations.bankingapi.domains.Customer;
 import com.haggardinnovations.bankingapi.domains.Withdrawal;
 import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
 import com.haggardinnovations.bankingapi.repositories.AccountRepo;
@@ -56,7 +57,14 @@ public class WithdrawalService {
     }
 
     public void updateWithdrawal(Long withdrawalId, Withdrawal withdrawal){
-        withdrawalRepo.save(withdrawal);
+        for (Account account : accountRepo.findAll()) {
+            withdrawal.setAccount(account);
+            for (Withdrawal withdrawal1 : withdrawalRepo.findAll()){
+                if (withdrawal1.getId().equals(withdrawalId)){
+                    withdrawalRepo.save(withdrawal);
+                }
+            }
+        }
     }
 
     public void deleteWithdrawal(Long withdrawalId){

@@ -46,8 +46,14 @@ public class DepositService {
     }
 
     public void updateDeposit(Deposit deposit, Long id){
-        verifyDeposit(id);
-        depositRepo.save(deposit);
+        for (Account account : accountRepo.findAll()) {
+            deposit.setAccount(account);
+            for (Deposit deposit1 : depositRepo.findAll()){
+                if (deposit1.getId().equals(id)){
+                    depositRepo.save(deposit);
+                }
+            }
+        }
     }
 
     public void deleteDeposit(Long id){

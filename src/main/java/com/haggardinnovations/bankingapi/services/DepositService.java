@@ -30,10 +30,10 @@ public class DepositService {
         }
     }
 
-    public List<Deposit> getAllDepositsByAccount(Long accountId){
-        List<Deposit> depositList = new ArrayList<>();
-        depositRepo.findAll().forEach(depositList::add);
-        return depositList;
+    public List<Deposit> getAllDeposits(Long id){
+        List<Deposit> deposits = new ArrayList<>();
+        depositRepo.findAll().forEach(deposits::add);
+        return deposits;
     }
 
     public Optional<Deposit> getDepositById(Long depositId){
@@ -41,8 +41,13 @@ public class DepositService {
         return depositRepo.findById(depositId);
     }
 
-    public void createDeposit(Deposit deposit){
-        depositRepo.save(deposit);
+    public void createDeposit(Deposit deposit, Long accountId) {
+        for (Account account : accountRepo.findAll()) {
+            if (account.getId().equals(accountId)) {
+                deposit.setAccount(account);
+                depositRepo.save(deposit);
+            }
+        }
     }
 
     public void updateDeposit(Deposit deposit, Long id){

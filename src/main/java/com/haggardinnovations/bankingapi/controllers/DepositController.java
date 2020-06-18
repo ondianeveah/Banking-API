@@ -35,8 +35,8 @@ public class DepositController {
     }
 
     @RequestMapping(value = "/accounts/{accountId}/deposits", method = RequestMethod.POST)
-    public ResponseEntity<?> createDeposit(@RequestBody Deposit deposit){
-        depositService.createDeposit(deposit);
+    public ResponseEntity<?> createDeposit(@RequestBody Deposit deposit, @PathVariable Long accountId){
+        depositService.createDeposit(deposit, accountId);
         HttpHeaders headers = new HttpHeaders();
         URI newWithdrawalUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

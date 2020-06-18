@@ -56,11 +56,11 @@ public class WithdrawalService {
         }
     }
 
-    public void updateWithdrawal(Long withdrawalId, Withdrawal withdrawal){
+    public void updateWithdrawal(Long withdrawalId, Withdrawal withdrawal) {
         for (Account account : accountRepo.findAll()) {
             withdrawal.setAccount(account);
-            for (Withdrawal withdrawal1 : withdrawalRepo.findAll()){
-                if (withdrawal1.getId().equals(withdrawalId)){
+            for (Withdrawal withdrawal1 : withdrawalRepo.findAll()) {
+                if (withdrawal1.getId().equals(withdrawalId)) {
                     withdrawalRepo.save(withdrawal);
                 }
             }

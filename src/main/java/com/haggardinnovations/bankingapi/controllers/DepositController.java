@@ -22,7 +22,7 @@ public class DepositController {
 
     @RequestMapping(value = "/accounts/{accountId}/deposits", method = RequestMethod.GET)
     public ResponseEntity<Iterable<Deposit>> getAllDepositsByAccount(@PathVariable Long accountId){
-        Iterable<Deposit> deposits = depositService.getAllDepositsByAccount(accountId);
+        Iterable<Deposit> deposits = depositService.getAllDeposits(accountId);
         SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.OK.value(), "Success", deposits);
         return new ResponseEntity(successfulResponseDetail, HttpStatus.OK);
     }

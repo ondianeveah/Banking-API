@@ -2,6 +2,7 @@ package com.haggardinnovations.bankingapi.controllers;
 
 
 import com.haggardinnovations.bankingapi.domains.Account;
+import com.haggardinnovations.bankingapi.dto.SuccessfulResponseDetail;
 import com.haggardinnovations.bankingapi.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +25,11 @@ public class AccountController {
     @RequestMapping(value = "/accounts", method = RequestMethod.GET)
     private ResponseEntity<List<Account>> getAllAccounts() {
         List<Account> accounts =  accountService.getAllAccounts();
-        return new ResponseEntity<>(accounts, HttpStatus.OK);
+        // Create a SuccessResponseDetail object
+        // Pass in the status code, the string success, and all the accounts
+        // Pass the resulting object in the ResponseEntity return
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.OK.value(), "Success", accounts);
+        return new ResponseEntity(successfulResponseDetail, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/customers/{customerId}/accounts", method = RequestMethod.POST)

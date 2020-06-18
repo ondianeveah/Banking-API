@@ -72,19 +72,22 @@ public class BillService {
         }
     }
 
-    // GOAL: Update the bill by the bill id
+    // GOAL: Update the existing account by the accountId
 
-    // Step 1: Looping through all the bills in the bill repo
-    // Step 2: Checking if the id passed matches the current billId
-    //
+    // Step 1: Loop through our customerRepo using a customer object as our iterator
+    // Step 1a: Using the account object passed, we then set the customer as the iterator customer object
+    // Step 2: Loop through our accountRepo using an account object as our iterator
+    // Step 2a: Check if the account object's id is equal to the passed id
+    // Step 3: Save the passed account object to the accountRepo
 
-    public void updateBill(Long billId, Bill bill){
+    public void updateBill(Long billId, Bill bill) {
         for (Bill b : billRepo.findAll()) {
             if (b.getId().equals(billId)) {
                 billRepo.save(bill);
             }
         }
     }
+
     public Long deleteBill (Long billId) {
         billRepo.deleteById(billId);
         return billId;

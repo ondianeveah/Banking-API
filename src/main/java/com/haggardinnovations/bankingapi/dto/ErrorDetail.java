@@ -1,10 +1,10 @@
 package com.haggardinnovations.bankingapi.dto;
 
 public class ErrorDetail {
-    private Long code;
+    private int code;
     private String message;
 
-    public ErrorDetail(Long code, String message) {
+    public ErrorDetail(int code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -13,11 +13,11 @@ public class ErrorDetail {
 
     }
 
-    public Long getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(Long code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

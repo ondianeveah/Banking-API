@@ -56,14 +56,15 @@ public class AccountController {
     @RequestMapping(value = "/customers/{customerId}/accounts", method = RequestMethod.GET)
     private ResponseEntity<List<Account>> getAllAccountsForCustomer(@PathVariable Long customerId) {
         List<Account> cId = accountService.getAllAccountsByCustomer(customerId);
-        return new ResponseEntity<>(cId, HttpStatus.OK);
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.OK.value(), "success", cId);
+        return new ResponseEntity(successfulResponseDetail, HttpStatus.OK);
     }
 
 
     @RequestMapping(value = "/accounts/{accountId}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateAccount(@PathVariable Long accountId, @RequestBody Account account) {
         accountService.updateAccount(accountId, account);
-        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.ACCEPTED.value(), "Customer account updated");
+        SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.ACCEPTED.value(), "Customer account updated", account);
         return new ResponseEntity(successfulResponseDetail, HttpStatus.ACCEPTED);
     }
 
@@ -71,7 +72,7 @@ public class AccountController {
     public ResponseEntity<?> deleteAccount(@PathVariable Long accountId) {
         accountService.deleteAccountById(accountId);
         SuccessfulResponseDetail successfulResponseDetail = new SuccessfulResponseDetail(HttpStatus.NO_CONTENT.value(), "Account successfully removed");
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(successfulResponseDetail, HttpStatus.NO_CONTENT);
     }
 
 }

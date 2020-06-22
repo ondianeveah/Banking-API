@@ -24,8 +24,8 @@ public class WithdrawalService {
 
     protected void verifyWithdrawal(Long withdrawalId) throws ResourceNotFoundException {
         Optional<Withdrawal> withdrawal = withdrawalRepo.findById(withdrawalId);
-        if (withdrawal == null){
-            throw new ResourceNotFoundException("Withdrawal with id" + withdrawalId + " not found");
+        if (withdrawal.isEmpty()){
+            throw new ResourceNotFoundException("Withdrawal with id " + withdrawalId + " not found");
         }
     }
 
@@ -57,6 +57,7 @@ public class WithdrawalService {
     }
 
     public void updateWithdrawal(Long withdrawalId, Withdrawal withdrawal) {
+        verifyWithdrawal(withdrawalId);
         for (Account account : accountRepo.findAll()) {
             withdrawal.setAccount(account);
             for (Withdrawal withdrawal1 : withdrawalRepo.findAll()) {

@@ -25,8 +25,8 @@ public class DepositService {
 
     protected void verifyDeposit(Long depositId) throws ResourceNotFoundException {
         Optional<Deposit> deposit = depositRepo.findById(depositId);
-        if (deposit == null){
-            throw new ResourceNotFoundException("Deposit with id" + depositId + " not found");
+        if (deposit.isEmpty()){
+            throw new ResourceNotFoundException("Deposit with id " + depositId + " not found");
         }
     }
 
@@ -51,6 +51,7 @@ public class DepositService {
     }
 
     public void updateDeposit(Deposit deposit, Long id){
+        verifyDeposit(id);
         for (Account account : accountRepo.findAll()) {
             deposit.setAccount(account);
             for (Deposit deposit1 : depositRepo.findAll()){

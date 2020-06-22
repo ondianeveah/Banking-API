@@ -2,8 +2,11 @@ package com.haggardinnovations.bankingapi.services;
 
 import com.haggardinnovations.bankingapi.domains.Account;
 import com.haggardinnovations.bankingapi.domains.Bill;
+import com.haggardinnovations.bankingapi.domains.Customer;
+import com.haggardinnovations.bankingapi.exceptions.ResourceNotFoundException;
 import com.haggardinnovations.bankingapi.repositories.AccountRepo;
 import com.haggardinnovations.bankingapi.repositories.BillRepo;
+import com.haggardinnovations.bankingapi.repositories.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,18 +23,22 @@ public class BillService {
     @Autowired
     private AccountRepo accountRepo;
 
+    @Autowired
+    private CustomerRepo customerRepo;
+
     public List<Bill> getAllBillsByAccountId(Long accountId) {
         List<Bill> bills = (ArrayList<Bill>) billRepo.findAll();
-//        verifyAccountById(accountId);
+        verifyAccount(accountId);
         List<Account> accounts = new ArrayList<>();
-        for (Account account : accounts){
+        for (Account account : accounts) {
             if (account.getId().equals(accountId))
                 return (List<Bill>) account;
         }
         return bills;
     }
 
-    public Optional<Bill> getBillById(Long billId){
+    public Optional<Bill> getBillById(Long billId) {
+        verifyBill(billId);
         return billRepo.findById(billId);
     }
 
@@ -47,8 +54,9 @@ public class BillService {
     public List<Bill> getBillsByCustomerId(Long customerId) {
         List<Bill> billsByAccountId = new ArrayList<>();
         List<Account> accountsByCustomer = new ArrayList<>(accountRepo.findByCustomerId(customerId));
+        verifyCustomer(customerId);
 
-        for (Account account: accountsByCustomer) {
+        for (Account account : accountsByCustomer) {
             billsByAccountId.addAll(billRepo.findByAccountId(account.getId()));
         }
 
@@ -62,7 +70,8 @@ public class BillService {
     // Step 2: Set the bill's account object to the looped account object
     // Step 3: Save the bill to the billRepo
 
-    public void createBill(Bill bill, Long accountId){
+    public void createBill(Bill bill, Long accountId) {
+        verifyAccount(accountId);
         for (Account account : accountRepo.findAll()) {
             if (account.getId().equals(accountId)) {
                 bill.setAccount(account);
@@ -71,30 +80,55 @@ public class BillService {
         }
     }
 
-    // GOAL: Update the existing account by the accountId
+        // GOAL: Update the existing account by the accountId
 
-    // Step 1: Loop through our customerRepo using a customer object as our iterator
-    // Step 1a: Using the account object passed, we then set the customer as the iterator customer object
-    // Step 2: Loop through our accountRepo using an account object as our iterator
-    // Step 2a: Check if the account object's id is equal to the passed id
-    // Step 3: Save the passed account object to the accountRepo
+        // Step 1: Loop through our customerRepo using a customer object as our iterator
+        // Step 1a: Using the account object passed, we then set the customer as the iterator customer object
+        // Step 2: Loop through our accountRepo using an account object as our iterator
+        // Step 2a: Check if the account object's id is equal to the passed id
+        // Step 3: Save the passed account object to the accountRepo
 
 
-    public void updateBill(Long billId, Bill bill){
-        for (Account a : accountRepo.findAll()){
-            bill.setAccount(a);
-        }
-        for (Bill b : billRepo.findAll()) {
-            if (b.getId().equals(billId)) {
-                billRepo.save(bill);
+        public void updateBill (Long billId, Bill bill){
+            for (Account a : accountRepo.findAll()) {
+                bill.setAccount(a);
+            }
+            for (Bill b : billRepo.findAll()) {
+                verifyBill(billId);
+                if (b.getId().equals(billId)) {
+                    billRepo.save(bill);
+                }
             }
         }
+
+        public Long deleteBill (Long billId){
+            verifyBill(billId);
+            billRepo.deleteById(billId);
+            return billId;
+        }
+
+        public void verifyBill (Long billId) throws ResourceNotFoundException {
+            Optional<Bill> bill = billRepo.findById(billId);
+            if (!bill.isPresent()) {
+                throw new ResourceNotFoundException("Bill with id " + billId + " not found");
+
+            }
+        }
+
+        public void verifyCustomer (Long customerId) throws ResourceNotFoundException {
+            Optional<Customer> customer = customerRepo.findById(customerId);
+            if (customer.isEmpty()) {
+                throw new ResourceNotFoundException("Customer with id " + customerId + " not found.");
+            }
+        }
+
+        public void verifyAccount (Long accountId) throws ResourceNotFoundException {
+            Optional<Account> account = accountRepo.findById(accountId);
+            if (account.isEmpty()) {
+                throw new ResourceNotFoundException("Account with id " + accountId + " not found.");
+            }
+        }
+
+
     }
 
-    public Long deleteBill (Long billId) {
-        billRepo.deleteById(billId);
-        return billId;
-    }
-
-
-}

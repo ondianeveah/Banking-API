@@ -30,7 +30,7 @@ public class AccountService {
 
 
     public Optional<Account> getAccountById(Long id) {
-//        verifyAccount(id);
+        verifyAccount(id);
         return accountRepo.findById(id);
     }
 
@@ -42,6 +42,7 @@ public class AccountService {
     // Step 3: Save the account to the accountRepo
 
     public void addAccount(Account account, Long customerId) {
+        verifyCustomer(customerId);
         for (Customer customer : customerRepo.findAll()) {
             if (customer.getId().equals(customerId)) {
                 account.setCustomer(customer);
@@ -51,6 +52,7 @@ public class AccountService {
     }
 
     public List<Account> getAllAccountsByCustomer(Long customerId) {
+        verifyCustomer(customerId);
         List<Account> listOfCustomerAccounts = new ArrayList<>();
         accountRepo.findByCustomerId(customerId).forEach(listOfCustomerAccounts::add);
         return listOfCustomerAccounts;
@@ -65,7 +67,7 @@ public class AccountService {
     // Step 3: Save the passed account object to the accountRepo
 
     public void updateAccount(Long accountId, Account account) {
-//        verifyAccount(id);
+        verifyAccount(accountId);
         for (Customer customer : customerRepo.findAll()) {
             account.setCustomer(customer);
             for (Account account1 : accountRepo.findAll()) {
@@ -77,18 +79,24 @@ public class AccountService {
     }
 
     public void deleteAccountById(Long id) {
-//        verifyAccount(id);
+        verifyAccount(id);
         accountRepo.deleteById(id);
     }
 
     public void verifyAccount(Long accountId) throws ResourceNotFoundException {
         Optional<Account> account = accountRepo.findById(accountId);
-        if (!account.isPresent()) {
+        if (account.isEmpty()) {
             throw new ResourceNotFoundException("Account with id " + accountId + " not found");
 
         }
     }
+    public void verifyCustomer(Long customerId) throws ResourceNotFoundException {
+        Optional<Customer> customer = customerRepo.findById(customerId);
+        if (customer.isEmpty()) {
+            throw new ResourceNotFoundException("Account with customer id " + customerId + " not found");
 
+        }
+    }
 
 }
 

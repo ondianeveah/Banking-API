@@ -33,7 +33,7 @@ public class CustomerExceptionHandler {
         ErrorDetail errorDetail = new ErrorDetail();
         errorDetail.setCode(HttpStatus.NOT_FOUND.value());
         errorDetail.setMessage("Error");
-        return  new ResponseEntity<>(errorDetail, null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorDetail, null, HttpStatus.NOT_FOUND);
     }
 
 }

@@ -37,7 +37,7 @@ public class CustomerService {
     }
 
     public Iterable<Customer> getAllCustomers() {
-      //  List<Customer> listOfCustomers = new ArrayList<>();
+//      List<Customer> listOfCustomers = new ArrayList<>();
         return customerRepo.findAll();
                 //.forEach(listOfCustomers::add);
       //  return listOfCustomers;
@@ -53,7 +53,7 @@ public class CustomerService {
     }
 
     public Customer getCustomersByAccountId(Long accountId) throws ResourceNotFoundException {
-        //  verifyAccount(accountId);
+        verifyAccount(accountId);
         Customer customer;
         for (Account account : accountRepo.findAll()) {
             if (account.getId().equals(accountId)) {
@@ -70,8 +70,8 @@ public class CustomerService {
     // If it's not null, you take the data inputted by the user and replace it
     // Then you save the customer
 
-    public Customer updateCustomerById(Long customerId, Customer customer){
-      //  verifyCustomer(customer.getId());
+    public Customer updateCustomerById(Long id, Customer customer){
+        verifyCustomer(id);
         return customerRepo.save(customer);
     }
 }

@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class CustomerController {
 
